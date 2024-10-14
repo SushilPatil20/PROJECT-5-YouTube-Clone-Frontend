@@ -1,11 +1,6 @@
-import Header from "./components/headerComponents/Header";
-
+import Layout from "./components/Layout.jsx";
 function App() {
-  return (
-    <>
-      <Header />
-    </>
-  );
+  return <Layout />;
 }
 
 export default App;

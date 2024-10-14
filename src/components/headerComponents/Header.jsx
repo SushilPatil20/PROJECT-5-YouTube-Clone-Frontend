@@ -2,12 +2,16 @@ import MenuSharp from "@mui/icons-material/MenuSharp";
 import SearchIcon from "@mui/icons-material/Search";
 import YouTubeLogo from "./YouTubeLogo";
 import { Mic } from "@mui/icons-material";
-// import { IconButton } from "@mui/material";
+import Videocam from "@mui/icons-material/Videocam";
+import { Avatar, IconButton } from "@mui/material";
+import Notifications from "@mui/icons-material/Notifications";
+import Person from "@mui/icons-material/Person";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <header className="border border-gray-500 flex items-center justify-between px-4">
-      <section className="flex items-center">
+    <header className="flex items-center justify-between px-4">
+      <section className="flex items-center space-x-2">
         <MenuSharp
           className="text-gray-600 hover:bg-gray-100 rounded-full p-1"
           fontSize="large"
@@ -33,8 +37,18 @@ const Header = () => {
           className="text-gray-800 bg-gray-100 rounded-full p-2 hover:bg-gray-200"
         />
       </section>
-      <section>
-        <p>Hello brother</p>
+      <section className="mr-2">
+        <div className="flex items-center space-x-2">
+          <Link to={"/signin"}>
+            <div className="flex items-center text-blue-600 space-x-2 px-4 py-2 border rounded-3xl hover:bg-blue-100 hover:border-blue-100 duration-100 min-w-fit">
+              <Person
+                fontSize="medium"
+                className="border border-blue-600 rounded-full "
+              />
+              <span className="text-sm font-semibold">Sign in</span>
+            </div>
+          </Link>
+        </div>
       </section>
     </header>
   );
