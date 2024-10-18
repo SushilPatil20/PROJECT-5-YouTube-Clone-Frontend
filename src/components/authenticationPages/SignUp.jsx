@@ -48,62 +48,63 @@ const SignUp = () => {
   };
 
   return (
-    <div className="bg-gray-800 p-8 rounded-lg shadow-md mx-auto w-4/5 md:w-1/3 mt-8">
+    <div className="bg-white p-8 rounded-lg shadow-xl shadow-gray-400 mx-auto w-4/5 md:w-1/3 mt-8">
       <h1 className="text-3xl font-semibold text-red-600 mb-6 text-center">
         Sign Up
       </h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Username Field */}
         <div>
-          <label className="block text-gray-300">Username</label>
+          <label className="block text-gray-800">Username</label>
           <input
             type="text"
             name="username"
             placeholder="Enter your username"
             value={formData.username}
             onChange={handleChange}
-            className="w-full px-4 py-2 bg-gray-700 text-gray-100 border border-gray-600 rounded-lg focus:outline-none focus:border-red-600"
+            className="w-full px-4 py-2 text-gray-100 border focus:border-2 border-gray-400 rounded-lg focus:outline-none focus:border-red-600"
             required
           />
         </div>
 
         {/* Email Field */}
         <div>
-          <label className="block text-gray-300">Email</label>
+          <label className="block text-gray-800">Email</label>
           <input
             type="email"
             name="email"
             placeholder="Enter your email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-4 py-2 bg-gray-700 text-gray-100 border border-gray-600 rounded-lg focus:outline-none focus:border-red-600"
+            className="w-full px-4 py-2 text-gray-100 border focus:border-2 border-gray-400 rounded-lg focus:outline-none focus:border-red-600"
             required
           />
         </div>
 
         {/* Password Field */}
         <div>
-          <label className="block text-gray-300">Password</label>
+          <label className="block text-gray-800">Password</label>
           <input
             type="password"
             name="password"
             placeholder="Enter your password"
             value={formData.password}
             onChange={handleChange}
-            className="w-full px-4 py-2 bg-gray-700 text-gray-100 border border-gray-600 rounded-lg focus:outline-none focus:border-red-600"
+            className="w-full px-4 py-2 text-gray-100 border focus:border-2 border-gray-400 rounded-lg focus:outline-none focus:border-red-600"
             required
+            autoComplete="true"
           />
         </div>
 
         {/* Avatar File Field */}
         <div>
-          <label className="block text-gray-300">Avatar (optional)</label>
+          <label className="block text-gray-800">Avatar (optional)</label>
           <input
             type="file"
             name="avatar"
             accept="image/*" // Only accept image files
             onChange={handleFileChange}
-            className="w-fit px-4 py-2 bg-gray-700 text-gray-100 border border-gray-600 rounded-lg focus:outline-none focus:border-red-600"
+            className="w-full px-4 py-2 text-gray-100 border focus:border-2 border-gray-400 rounded-lg focus:outline-none focus:border-red-600"
           />
         </div>
 
@@ -119,9 +120,9 @@ const SignUp = () => {
       </form>
 
       {/* Message for users who already have an account */}
-      <p className="text-center text-gray-400 mt-4">
-        Already have an account?{" "}
-        <Link to="/signin" className="text-red-600 hover:underline">
+      <p className="text-center text-gray-800 mt-4">
+        Already have an account?
+        <Link to="/signin" className="text-red-600 hover:underline ml-1">
           Sign In
         </Link>
       </p>

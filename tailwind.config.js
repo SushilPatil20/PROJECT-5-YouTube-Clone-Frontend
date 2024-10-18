@@ -9,9 +9,15 @@ export default {
       fontFamily: {
         roboto: ['Roboto', 'sans-serif'],
       },
-      width: {
-        '26': '6.5rem'
+      fontSize: {
+        'xs': [
+          '0.65rem',
+          '0.75rem'
+        ]
       }
+      , spacing: {
+        '13': '3.25rem',
+      },
     },
   },
   plugins: [],
