@@ -5,6 +5,13 @@
 @tailwind utilities;
 
 
+
+.no-scrollbar {
+    scrollbar-width: none;
+}
+
+
+
 .custom-scrollbar {
     scrollbar-width: none;
     scrollbar-color: #888 #f0f0f0;

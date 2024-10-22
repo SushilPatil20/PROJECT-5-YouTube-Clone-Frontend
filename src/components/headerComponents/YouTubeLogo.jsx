@@ -11,15 +11,15 @@ const YouTubeLogo = () => {
         >
           IN
         </span>
-        <div className="w-24 md:w-26">
+        <div className="w-24 md:w-28">
           <img
-            src="https://www.freeiconspng.com/uploads/youtube-logo-png-transparent-image-5.png"
+            src="https://cdn.mos.cms.futurecdn.net/8gzcr6RpGStvZFA2qRt4v6.jpg"
             alt="YouTube-logo"
+            // loading="lazy"
           />
         </div>
       </div>
     </Link>
   );
 };
-
 export default YouTubeLogo;

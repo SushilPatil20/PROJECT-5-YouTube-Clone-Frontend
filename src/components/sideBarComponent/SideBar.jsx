@@ -24,9 +24,9 @@ import { Link } from "react-router-dom";
 const Sidebar = ({ isOpen }) => {
   return (
     <div
-      className={`custom-scrollbar ${
-        isOpen ? "w-60 px-3" : "w-20 overflow-x-hidden"
-      }  text-gray-800 transition-width duration-300 overflow-y-auto`}
+      className={`custom-scrollbar bg-white z-10 pb-16 fixed  h-full md:-translate-x-0 md:pb-0  md:static ${
+        isOpen ? "w-60 px-3 translate-x-0" : "w-20 -translate-x-full"
+      }  text-gray-800 transition-width  duration-300 overflow-x-hidden overflow-y-auto`}
     >
       <div className="pt-4">
         <div
@@ -201,10 +201,10 @@ const Sidebar = ({ isOpen }) => {
         {/* More from YouTube */}
         {isOpen && (
           <div className="border-b border-gray-300 pb-4">
-            <h3 className="font-semibold flex items-end text-black py-2 px-4 rounded-lg my-4">
+            <h3 className="font-semibold flex items-end text-black py-2 px-4 rounded-lg mt-2">
               More from YouTube
             </h3>
-            <div className="space-y-4">
+            <div>
               <div className="flex items-center space-x-4 hover:bg-gray-100 px-4 py-2">
                 <SettingsIcon className="text-gray-500 text-lg" />
                 <span>Settings</span>

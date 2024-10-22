@@ -9,7 +9,6 @@ const Layout = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      console.log(isSidebarOpen);
       checkScreenSize() ? setIsSidebarOpen(true) : setIsSidebarOpen(false);
     };
     window.addEventListener("resize", handleResize);
@@ -27,9 +26,8 @@ const Layout = () => {
       <div className="flex flex-col h-screen">
         <Header toggleSidebar={toggleSidebar} className="flex-shrink-0" />
         <main className="flex flex-1 overflow-hidden">
-          <Sidebar isOpen={isSidebarOpen} />
-          {isSidebarOpen}
-          <div className="flex-1 h-full overflow-hidden">
+          {/* <Sidebar isOpen={isSidebarOpen} /> */}
+          <div className="flex-1 h-full overflow-y-auto">
             <Outlet />
           </div>
         </main>

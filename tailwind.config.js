@@ -15,9 +15,6 @@ export default {
           '0.75rem'
         ]
       }
-      , spacing: {
-        '13': '3.25rem',
-      },
     },
   },
   plugins: [],

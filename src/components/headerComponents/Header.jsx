@@ -19,7 +19,7 @@ const Header = ({ toggleSidebar }) => {
   }, []);
 
   return (
-    <header className="flex items-center justify-between px-4 sticky top-0 bg-white z-10">
+    <header className="flex items-center justify-between px-4 sticky top-0 bg-white z-10 py-1">
       {/* Left side: Menu icon and YouTube logo */}
       <section className="flex items-center">
         <MenuSharp
