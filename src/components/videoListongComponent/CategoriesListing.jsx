@@ -18,7 +18,7 @@ const categories = [
 
 const CategoriesListing = () => {
   return (
-    <div className="h-fit flex items-center overflow-x-auto sticky top-0 bg-white py-3 no-scrollbar">
+    <div className="flex h-full w-full items-center overflow-x-auto sticky top-0 bg-white py-4 no-scrollbar">
       {categories.map((category, index) => (
         <p
           key={index}

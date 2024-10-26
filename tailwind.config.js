@@ -14,6 +14,9 @@ export default {
           '0.65rem',
           '0.75rem'
         ]
+      },
+      width: {
+        '26': '100px'
       }
     },
   },

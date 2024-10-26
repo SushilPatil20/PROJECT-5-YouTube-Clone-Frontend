@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const YouTubeLogo = () => {
   return (
     <Link to={"/"}>
-      <div className="relative left-2">
+      <div className="relative left-2 cursor-pointer">
         <span
           className="absolute -right-2 text-gray-600 top-2"
           style={{ fontSize: "10px" }}

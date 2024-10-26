@@ -26,8 +26,8 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-xl shadow-gray-400 mx-auto w-4/5 md:w-1/3 mt-8">
-      <h1 className="text-3xl font-semibold text-red-600 mb-6 text-center">
+    <div className="bg-white p-8 rounded-lg shadow-xl shadow-gray-400 mx-auto w-11/12 md:w-3/4 lg:w-1/2  mt-8">
+      <h1 className="text-3xl font-semibold text-red-600  mb-6 text-center">
         Sign In
       </h1>
       <form onSubmit={handleSubmit} className="space-y-4">
