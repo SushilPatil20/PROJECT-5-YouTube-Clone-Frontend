@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import SignUp from "./components/authenticationPages/SignUp.jsx";
 import Login from "./components/authenticationPages/Login.jsx";
 import VideoListing from "./components/videoListongComponent/VideoListing.jsx";
+import ChannelPage from "./components/ChannelPage.jsx";
 
 const WatchPage = lazy(() =>
   import("./components/videoListongComponent/Watch.jsx")
@@ -16,7 +17,7 @@ const WatchPage = lazy(() =>
 const appRouter = createBrowserRouter([
   {
     path: "/",
-    element: <App className="font-roboto" />,
+    element: <App />,
     children: [
       {
         path: "/",
@@ -38,12 +39,16 @@ const appRouter = createBrowserRouter([
         path: "/signin",
         element: <Login />,
       },
+      {
+        path: "/channel-page",
+        element: <ChannelPage />,
+      },
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <RouterProvider router={appRouter}></RouterProvider>
-  </StrictMode>
+  // <StrictMode>
+  <RouterProvider router={appRouter}></RouterProvider>
+  // </StrictMode>
 );

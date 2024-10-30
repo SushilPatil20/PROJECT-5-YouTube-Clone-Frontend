@@ -7,10 +7,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { ArrowBack } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-import {
-  getUrlPathName,
-  compontShouldShowOnSignUpAndSignIn,
-} from "../../utils/helpers";
+import { compontShouldShowOnSignUpAndSignIn } from "../../utils/helpers";
 import ProfilePopover from "./ProfilePopover";
 
 const Header = ({ toggleSidebar }) => {

@@ -8,7 +8,7 @@ import {
 } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import CategoriesListing from "./CategoriesListing";
-import { carts, comments } from "../../utils/helpers";
+import { carts, comments, formatLikesCount } from "../../utils/helpers";
 import { useNavigate, useParams } from "react-router";
 
 const WatchPage = () => {
@@ -20,6 +20,7 @@ const WatchPage = () => {
 
   useEffect(() => {
     const video = carts.find((video) => video.id == videoId);
+    // console.log("Suhil");
     setCurrentVideo(video);
   }, [videoId]);
 
@@ -66,7 +67,9 @@ const WatchPage = () => {
               >
                 <ThumbUp fontSize="small" />
                 <span className=" text-gray-700">
-                  {likes > 0 && <span className="mx-1">{likes}</span>}
+                  {likes > 0 && (
+                    <span className="mx-1">{formatLikesCount(likes)}</span>
+                  )}
                 </span>
               </div>
               <span className="border-l h-3/4 border-gray-400"></span>
@@ -161,17 +164,14 @@ const WatchPage = () => {
             <div
               onClick={() => navigate(`/watch/${video.id}`)}
               key={index}
-              className="flex space-x-2 "
+              className="flex space-x-2 cursor-pointer"
             >
               {/* <video
                   ref={videoRef}
                   className="w-44 h-24 rounded"
                   src="https://www.w3schools.com/html/mov_bbb.mp4"
                 /> */}
-              <img
-                src="https://i.ytimg.com/vi/DQ3Vq9hDwkM/hq720.jpg?sqp=-oaymwE2CNAFEJQDSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_AiAAtAFigIMCAAQARh_IBgoNzAP&rs=AOn4CLAYLEcuo6f828Z7At0zUg1rjEPhHw"
-                className="w-44 h-24 rounded"
-              />
+              <img src={video.thumbnail} className="w-44 h-24 rounded" />
               <div>
                 <p className="text-sm font-semibold text-black line-clamp-2 no-underline">
                   {video.title}

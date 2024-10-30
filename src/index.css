@@ -5,11 +5,13 @@
 @tailwind utilities;
 
 
+/* * {
+    font-family: 'Roboto', sans-serif;
+} */
 
 .no-scrollbar {
     scrollbar-width: none;
 }
-
 
 
 .custom-scrollbar {
@@ -19,4 +21,16 @@
 
 .custom-scrollbar:hover {
     scrollbar-width: thin;
+}
+
+
+@keyframes crouchAndTakeoff {
+    0% {
+        transform: scale(0.9);
+        transform: translateY(20px);
+    }
+
+    100% {
+        transform: translateY(-100px);
+    }
 }

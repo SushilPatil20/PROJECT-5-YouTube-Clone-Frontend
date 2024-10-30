@@ -9,15 +9,30 @@ export const getUrlPathName = () => {
     return pathname
 }
 
+export const formatLikesCount = (num) => {
+    if (num >= 1000 && num < 1000000) {
+        return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+    }
+    if (num >= 1000000) {
+        return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+    }
+    return num.toString();
+}
+
+
+export const sanitizeString = (input) => {
+    const baseName = input.replace(/\.[^/.]+$/, "");
+
+    const name = baseName.replace(/[^a-zA-Z0-9 ]/g, " ");
+    return name
+}
+
+
 
 export const compontShouldShowOnSignUpAndSignIn = () => {
     return !(getUrlPathName().toLocaleLowerCase().includes("signin")
         || getUrlPathName().toLocaleLowerCase().includes("signup"))
 }
-
-
-
-
 
 export const carts = [
     {
@@ -26,7 +41,7 @@ export const carts = [
         title:
             "Mani ने 'Chunar' Song गाकर किया सबको Emotional | Superstar Singer 2| Heart Breaking Songs",
         thumbnail:
-            "https://i.ytimg.com/vi/DQ3Vq9hDwkM/hq720.jpg?sqp=-oaymwE2CNAFEJQDSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_AiAAtAFigIMCAAQARh_IBgoNzAP&rs=AOn4CLAYLEcuo6f828Z7At0zUg1rjEPhHw",
+            "https://i.ytimg.com/vi/3fumBcKC6RE/hq720.jpg",
         channel: "CodeAcademy",
         views: "1.2M views",
     },
@@ -34,7 +49,7 @@ export const carts = [
         id: 10100002,
         url: "https://www.w3schools.com/html/movie.mp4",
         title: "Top 10 Motivational Songs to Start Your Day",
-        thumbnail: "https://i.ytimg.com/vi/hA3jzwZJhO8/hq720.jpg",
+        thumbnail: "https://i.ytimg.com/vi/DLX62G4lc44/hq720.jpg",
         channel: "MusicHits",
         views: "2.5M views",
     },
@@ -42,7 +57,7 @@ export const carts = [
         id: 10100003,
         url: "https://www.w3schools.com/html/mov_bbb.mp4",
         title: "Relaxing Instrumental Music Compilation",
-        thumbnail: "https://i.ytimg.com/vi/vVx1eCZLFeU/hq720.jpg",
+        thumbnail: "https://i.ytimg.com/vi/DLX62G4lc44/hq720.jpg",
         channel: "PeacefulMelodies",
         views: "3.8M views",
     },
@@ -50,7 +65,7 @@ export const carts = [
         id: 10100004,
         url: "https://www.w3schools.com/html/movie.mp4",
         title: "Epic Battle Music - Best of Gaming Soundtracks",
-        thumbnail: "https://i.ytimg.com/vi/o-YBDTqX_ZU/hq720.jpg",
+        thumbnail: "https://i.ytimg.com/vi/DLX62G4lc44/hq720.jpg",
         channel: "GameZone",
         views: "1.9M views",
     },
@@ -74,7 +89,7 @@ export const carts = [
         id: 10100007,
         url: "https://www.w3schools.com/html/mov_bbb.mp4",
         title: "Yoga for Beginners | Daily Routine",
-        thumbnail: "https://i.ytimg.com/vi/MKJhZANn97U/hq720.jpg",
+        thumbnail: "https://i.ytimg.com/vi/3fumBcKC6RE/hq720.jpg",
         channel: "HealthGuru",
         views: "1.1M views",
     },
@@ -98,7 +113,7 @@ export const carts = [
         id: 10100010,
         url: "https://www.w3schools.com/html/movie.mp4",
         title: "Morning Relaxation Music for Meditation",
-        thumbnail: "https://i.ytimg.com/vi/UBV4UBHDSzc/hq720.jpg",
+        thumbnail: "https://i.ytimg.com/vi/dQw4w9WgXcQ/hq720.jpg",
         channel: "SoulJourney",
         views: "4.0M views",
     },
@@ -114,7 +129,7 @@ export const carts = [
         id: 10100012,
         url: "https://www.w3schools.com/html/movie.mp4",
         title: "Productivity Music for Programmers",
-        thumbnail: "https://i.ytimg.com/vi/TcoTSC2bP7Q/hq720.jpg",
+        thumbnail: "https://i.ytimg.com/vi/9bZkp7q19f0/hq720.jpg",
         channel: "FocusTime",
         views: "800K views",
     },
@@ -122,7 +137,7 @@ export const carts = [
         id: 10100013,
         url: "https://www.w3schools.com/html/mov_bbb.mp4",
         title: "Soothing Rain Sounds for Sleep & Relaxation",
-        thumbnail: "https://i.ytimg.com/vi/j5a0jTc9S10/hq720.jpg",
+        thumbnail: "https://i.ytimg.com/vi/9bZkp7q19f0/hq720.jpg",
         channel: "CalmWave",
         views: "5.2M views",
     },
@@ -146,7 +161,7 @@ export const carts = [
         id: 10100016,
         url: "https://www.w3schools.com/html/movie.mp4",
         title: "Learn HTML in 10 Minutes - Crash Course",
-        thumbnail: "https://i.ytimg.com/vi/ub82Xb1C8os/hq720.jpg",
+        thumbnail: "https://i.ytimg.com/vi/XqZsoesa55w/hq720.jpg",
         channel: "QuickLearn",
         views: "2.3M views",
     },
@@ -154,7 +169,7 @@ export const carts = [
         id: 10100017,
         url: "https://www.w3schools.com/html/mov_bbb.mp4",
         title: "Best Piano Covers for Studying",
-        thumbnail: "https://i.ytimg.com/vi/ZZ5LpwO-An4/hq720.jpg",
+        thumbnail: "https://i.ytimg.com/vi/XqZsoesa55w/hq720.jpg",
         channel: "PeacefulKeys",
         views: "4.7M views",
     },
@@ -162,7 +177,7 @@ export const carts = [
         id: 10100018,
         url: "https://www.w3schools.com/html/movie.mp4",
         title: "CSS Basics - Styling the Web",
-        thumbnail: "https://i.ytimg.com/vi/ixKoKHShyY8/hq720.jpg",
+        thumbnail: "https://i.ytimg.com/vi/XqZsoesa55w/hq720.jpg",
         channel: "CodeBasics",
         views: "1.4M views",
     },
@@ -170,7 +185,7 @@ export const carts = [
         id: 10100019,
         url: "https://www.w3schools.com/html/mov_bbb.mp4",
         title: "Java Full Course - Step by Step Guide",
-        thumbnail: "https://i.ytimg.com/vi/3JZ_D3ELwOQ/hq720.jpg",
+        thumbnail: "https://i.ytimg.com/vi/XqZsoesa55w/hq720.jpg",
         channel: "CodeMastery",
         views: "3.1M views",
     },
@@ -183,6 +198,7 @@ export const carts = [
         views: "7.8M views",
     }
 ];
+
 
 
 

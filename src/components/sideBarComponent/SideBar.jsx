@@ -29,7 +29,7 @@ const Sidebar = ({ isOpen, toggleSidebar, isWatchPage }) => {
       className={`custom-scrollbar bg-white z-20 pb-16 transition-all duration-300 overflow-x-hidden overflow-y-auto ${
         isWatchPage
           ? `fixed top-0 left-0 h-full ${
-              isOpen ? "translate-x-0 " : "-translate-x-full"
+              isOpen ? "translate-x-0" : "-translate-x-full"
             } w-60 px-2`
           : `md:static`
       }`}
@@ -262,6 +262,7 @@ const Sidebar = ({ isOpen, toggleSidebar, isWatchPage }) => {
     </div>
   ) : (
     <div
+      style={{ zIndex: 1 }}
       className={`custom-scrollbar bg-white z-10 pb-16 fixed h-full md:-translate-x-0 md:pb-0 md:static ${
         isOpen ? "w-60 px-2 translate-x-0" : "w-20 -translate-x-full"
       }  text-gray-800 transition-width duration-300 overflow-x-hidden overflow-y-auto md:px-3`}
