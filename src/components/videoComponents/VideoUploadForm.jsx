@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useMemo } from "react";
 import { IconButton, TextField, Avatar } from "@mui/material";
 import { Close, VideoLibrary, Image } from "@mui/icons-material";
 import { sanitizeString } from "../../utils/helpers";
@@ -9,6 +9,10 @@ const VideoUploadForm = ({ isOpen, onClose, videoFile }) => {
     thumbnailUrl: "",
     description: "",
   });
+  const videoFileRef = useRef(videoFile);
+  const videoUrl = useMemo(() => {
+    return URL.createObjectURL(videoFileRef.current);
+  }, [videoFileRef.current]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -110,11 +114,11 @@ const VideoUploadForm = ({ isOpen, onClose, videoFile }) => {
           {/* Right: Video Preview Section */}
           <div className="w-full lg:w-[35%] flex flex-col items-center gap-4 border rounded-lg  mt-16">
             <div className="w-full h-48 bg-black flex items-center justify-center rounded-t-lg  overflow-hidden">
-              {videoFile ? (
+              {videoUrl ? (
                 <video
                   controls
-                  src={URL.createObjectURL(videoFile)}
-                  className="w-full h-full object-cover"
+                  src={videoUrl}
+                  className="w-full h-full object-contain"
                 />
               ) : (
                 <p className="text-gray-500">Video preview will appear here</p>
@@ -126,8 +130,7 @@ const VideoUploadForm = ({ isOpen, onClose, videoFile }) => {
               <div>
                 <p className=" text-gray-600">Video Link </p>
                 <p className="text-blue-600 cursor-pointer">
-                  https://youtube.com/shorts/
-                  {Math.random().toString(36).slice(2, 10)}
+                  https://youtube.com/shorts/qb9gntza
                 </p>
               </div>
               <div>

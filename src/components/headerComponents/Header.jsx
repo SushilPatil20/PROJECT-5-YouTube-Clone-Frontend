@@ -6,7 +6,7 @@ import Person from "@mui/icons-material/Person";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { ArrowBack } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import { compontShouldShowOnSignUpAndSignIn } from "../../utils/helpers";
 import ProfilePopover from "./ProfilePopover";
 
@@ -115,20 +115,23 @@ const Header = ({ toggleSidebar }) => {
                     onClick={handleClick}
                     className="flex items-center cursor-pointer text-blue-600 space-x-2 p-1 rounded-full  hover:bg-blue-100 hover:border-blue-100 duration-100 mr-0 md:mr-4"
                   >
-                    <Person
-                      fontSize="large"
-                      className="border border-blue-600 rounded-full w-8"
-                      sx={{
-                        fontSize: {
-                          md: "2rem",
-                        },
-                      }}
-                    />
+                    <Tooltip title="Profile" placement="bottom">
+                      <Person
+                        fontSize="large"
+                        className="border border-blue-600 rounded-full w-8"
+                        sx={{
+                          fontSize: {
+                            md: "2rem",
+                          },
+                        }}
+                      />
+                    </Tooltip>
                   </div>
                   <ProfilePopover
                     handleClose={handleClose}
                     anchorEl={anchorEl}
                     open={open}
+                    onSignOut={setIsSignIn}
                   />
                 </>
               )}

@@ -3,11 +3,19 @@ import { Popover, Avatar } from "@mui/material";
 import Logout from "@mui/icons-material/Logout";
 import CreateChannelPopover from "./CreateChannelPopover";
 import { AddCircle } from "@mui/icons-material";
+import { useNavigate } from "react-router";
 
-const ProfilePopover = ({ handleClose, anchorEl, open }) => {
+const ProfilePopover = ({ handleClose, anchorEl, open, onSignOut }) => {
+  const navigation = useNavigate();
   const [isCreateChannelOpen, setCreateChannelOpen] = useState(false);
+  const [channels, setChannels] = useState(["channel1"]);
   const handleCreateChannelButton = () => {
     setCreateChannelOpen(true);
+    handleClose();
+  };
+
+  const handleNavigation = () => {
+    navigation("/channel-page/");
     handleClose();
   };
 
@@ -46,20 +54,37 @@ const ProfilePopover = ({ handleClose, anchorEl, open }) => {
                 <p className="text-lg">Sushil Patil</p>
                 <p className="text-sm">sushil.patil.techie@gmail.com</p>
               </div>
-              <button
-                onClick={handleCreateChannelButton}
-                className="text-sm text-left text-blue-800 mt-2"
-              >
-                Create a channel
-              </button>
+              {channels.length > 0 ? (
+                <button
+                  onClick={handleNavigation}
+                  className="text-sm text-left text-blue-800 mt-2"
+                >
+                  View your channel
+                </button>
+              ) : (
+                <button
+                  onClick={handleCreateChannelButton}
+                  className="text-sm text-left text-blue-800 mt-2"
+                >
+                  Create a channel
+                </button>
+              )}
             </div>
           </div>
-          <div className="px-5 py-2 hover:bg-gray-100 space-x-4 cursor-pointer">
-            {/* <Logout className="text-gray-600" /> */}
-            <AddCircle className="text-gray-600" />
-            <span className="text-sm ">Create a channel</span>
-          </div>
-          <div className="px-5 py-2 hover:bg-gray-100 space-x-4 cursor-pointer">
+          {channels.length > 0 && (
+            <div
+              className="px-5 py-2 hover:bg-gray-100 space-x-4 cursor-pointer"
+              onClick={handleCreateChannelButton}
+            >
+              {/* <Logout className="text-gray-600" /> */}
+              <AddCircle className="text-gray-600" />
+              <span className="text-sm ">Create a channel</span>
+            </div>
+          )}
+          <div
+            onClick={() => onSignOut(false)}
+            className="px-5 py-2 hover:bg-gray-100 space-x-4 cursor-pointer"
+          >
             <Logout className="text-gray-600" />
             <span className="text-sm ">Sign out</span>
           </div>

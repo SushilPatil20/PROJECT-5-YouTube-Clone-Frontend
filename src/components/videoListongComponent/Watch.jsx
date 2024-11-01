@@ -14,13 +14,11 @@ import { useNavigate, useParams } from "react-router";
 const WatchPage = () => {
   const { videoId } = useParams();
   const navigate = useNavigate();
-  const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [currentVideo, setCurrentVideo] = useState({});
   const [likes, setLikes] = useState(0);
 
   useEffect(() => {
     const video = carts.find((video) => video.id == videoId);
-    // console.log("Suhil");
     setCurrentVideo(video);
   }, [videoId]);
 
@@ -91,7 +89,9 @@ const WatchPage = () => {
         </div>
 
         <div className="mt-10">
-          <h3 className="text-xl font-bold mb-6">4,366 Comments</h3>
+          <h3 className="text-xl font-bold mb-6">
+            {formatLikesCount(comments.length)} Comments
+          </h3>
           <div className="flex items-center pr-2 mb-6">
             <img
               src="https://via.placeholder.com/40"
@@ -139,12 +139,7 @@ const WatchPage = () => {
                   </div>
                 </div>
                 <div>
-                  {isOpenDelete && (
-                    <button className="text-xs bg-gray-100 hover:bg-gray-200 py-1 font-semibold px-2 rounded">
-                      Delete Comment
-                    </button>
-                  )}
-                  <IconButton onClick={() => setIsOpenDelete(!isOpenDelete)}>
+                  <IconButton>
                     <MoreVert />
                   </IconButton>
                 </div>

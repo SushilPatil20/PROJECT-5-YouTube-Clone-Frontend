@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import VideoUploadModal from "../components/videoComponents/VideoUploadModel";
+import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleModal } from "../store/slice/modalSlice";
+import IfNotContent from "./IfNotContent";
+// import { carts } from "../utils/helpers";
 
 const ChannelPage = () => {
-  const [videoUploadModel, setVideoUploadModel] = useState(false);
-
-  const handleVideoUploadeModel = () => {
-    !videoUploadModel ? setVideoUploadModel(true) : setVideoUploadModel(false);
-  };
+  const carts = [];
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isModalOpen = useSelector((state) => state.videoModel.isOpen);
+  const handleVideoUploadModal = () => dispatch(toggleModal());
 
   return (
     <div className="w-full  max-w-7xl font-roboto ml-auto">
@@ -32,48 +37,45 @@ const ChannelPage = () => {
             <button className="text-sm bg-gray-100 font-semibold text-gray-800 rounded-3xl px-4 py-2 hover:bg-gray-200">
               Customise Channel
             </button>
-            <button className="text-sm bg-gray-100 font-semibold text-gray-800 rounded-3xl px-4 py-2 hover:bg-gray-200">
+            <button
+              onClick={() => navigate("/video-management-dashboard")}
+              className="text-sm bg-gray-100 font-semibold text-gray-800 rounded-3xl px-4 py-2 hover:bg-gray-200"
+            >
               Manage Videos
             </button>
           </div>
         </div>
       </div>
       <section>
-        <ul className="flex items-center gap-8 my-3 border-b border-gray-200 px-9">
-          <li className="border-b-2  border-gray-800 py-1 h-10 font-semibold">
-            Videos
-          </li>
-          <li className="hover:border-b-2  text-gray-500 font-semibold hover:border-gray-700 py-1 h-10">
-            Posts
-          </li>
-        </ul>
-
-        <div className="text-sm text-center w-1/2 mx-auto mt-12">
-          <img
-            src="https://www.gstatic.com/youtube/img/channels/core_channel_no_activity.svg"
-            className="w-36 h-36 block mx-auto"
-          />
-          <p className="font-semibold my-2 text-gray-900">
-            Create content on any device
-          </p>
-          <p>
-            Upload and record at home or on the go. <br /> Everything you make
-            public will appear here.
-          </p>
-          {videoUploadModel && (
-            <VideoUploadModal
-              isOpen={videoUploadModel}
-              onClose={handleVideoUploadeModel}
-            />
-          )}
-
-          <button
-            onClick={handleVideoUploadeModel}
-            className="cursor-pointer mt-6 text-sm hover:bg-gray-800 bg-black text-white px-4 py-2 rounded-3xl"
-          >
-            Create
-          </button>
-        </div>
+        {carts.length > 0 ? (
+          <>
+            <ul className="flex items-center gap-8 my-3 border-b border-gray-200 px-9">
+              <li className="border-b-2  border-gray-800 py-1 h-10 font-semibold">
+                Videos
+              </li>
+              <li className="hover:border-b-2  text-gray-500 font-semibold hover:border-gray-700 py-1 h-10">
+                Posts
+              </li>
+            </ul>
+            <p>Content</p>
+          </>
+        ) : (
+          <div className="text-sm text-center w-1/2 mx-auto mt-12">
+            <IfNotContent />
+            {isModalOpen && (
+              <VideoUploadModal
+                isOpen={isModalOpen}
+                onClose={handleVideoUploadModal}
+              />
+            )}
+            <button
+              onClick={handleVideoUploadModal}
+              className="cursor-pointer mt-6 text-sm hover:bg-gray-800 bg-black text-white px-4 py-2 rounded-3xl"
+            >
+              Create
+            </button>
+          </div>
+        )}
       </section>
     </div>
   );

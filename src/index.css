@@ -9,6 +9,14 @@
     font-family: 'Roboto', sans-serif;
 } */
 
+
+/* For Microsoft Edge (and possibly other browsers that add a default icon) */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    display: none;
+}
+
+
 .no-scrollbar {
     scrollbar-width: none;
 }

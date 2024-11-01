@@ -17,6 +17,9 @@ export default {
       },
       width: {
         '26': '100px'
+      },
+      zIndex: {
+        '1': 1
       }
     },
   },
