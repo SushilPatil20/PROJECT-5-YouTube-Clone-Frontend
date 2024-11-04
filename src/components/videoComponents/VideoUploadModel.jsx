@@ -3,15 +3,21 @@ import { IconButton } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import UploadIcon from "@mui/icons-material/Upload";
 import VideoUploadForm from "./VideoUploadForm";
-
-const VideoUploadModal = ({ isOpen, onClose }) => {
+import { videoUploadSchema } from "../../validations/videoDetailsSchema";
+const VideoUploadModal = ({ onClose }) => {
   const [isUploaded, setIsUploaded] = useState(false);
   const [selectedVideoFile, setSelectedVideoFile] = useState(null);
   const [openForm, setIsOpenForm] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleUploadedFile = (file) => {
-    setSelectedVideoFile(file);
-    handleVideoUploadeForm();
+  const handleUploadedFile = async (file) => {
+    try {
+      const validatedFile = await videoUploadSchema.validate({ file });
+      setSelectedVideoFile(validatedFile.file);
+      handleVideoUploadeForm();
+    } catch (error) {
+      return setError(error.message);
+    }
   };
 
   const handleVideoUploadeForm = () => {
@@ -76,6 +82,7 @@ const VideoUploadModal = ({ isOpen, onClose }) => {
             />
           </div>
           <div className="my-8">
+            {error && <p className="mb-2 text-red-500">{error}</p>}
             <p className="text-sm mb-2 text-black">
               Drag and drop video files to upload
             </p>
@@ -91,11 +98,11 @@ const VideoUploadModal = ({ isOpen, onClose }) => {
               multiple
               type="file"
               id="youTubePost"
-              onChange={handleFileSelect} // Added file select handler
+              onChange={handleFileSelect}
             />
             <label
               htmlFor="youTubePost"
-              className="bg-black text-white rounded-full px-4 py-2 hover:bg-gray-900"
+              className="bg-black cursor-pointer text-white rounded-full px-4 py-2 hover:bg-gray-900"
             >
               Select files
             </label>
@@ -118,7 +125,7 @@ const VideoUploadModal = ({ isOpen, onClose }) => {
           <p className="mt-2">
             Uploading illegally filmed content is punishable under law and may
             be removed. Please be sure not to violate others' copyright or
-            privacy rights.{" "}
+            privacy rights.
             <a href="#learn-more" className="text-blue-600 underline">
               Learn more
             </a>

@@ -1,43 +1,4 @@
 import { useLocation } from "react-router"
-
-export const checkScreenSize = () => {
-    return window.innerWidth >= 1312
-}
-
-export const getUrlPathName = () => {
-    const { pathname } = useLocation();
-    return pathname
-}
-
-export const formatLikesCount = (num) => {
-    if (num >= 1000 && num < 1000000) {
-        return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
-    }
-    if (num >= 1000000) {
-        return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
-    }
-    return num.toString();
-}
-
-
-export const back = () => {
-    return window.history.back()
-}
-
-export const sanitizeString = (input) => {
-    const baseName = input.replace(/\.[^/.]+$/, "");
-
-    const name = baseName.replace(/[^a-zA-Z0-9 ]/g, " ");
-    return name
-}
-
-
-
-export const compontShouldShowOnSignUpAndSignIn = () => {
-    return !(getUrlPathName().toLocaleLowerCase().includes("signin")
-        || getUrlPathName().toLocaleLowerCase().includes("signup"))
-}
-
 export const carts = [
     {
         id: 10100001,
@@ -55,6 +16,7 @@ export const carts = [
         ],
         uploadDate: "30-10-2024",
         description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus optio natus minima qui dolor harum voluptas voluptates nemo quas quidem expedita blanditiis dicta repudiandae veritatis exercitationem sint dolorum unde eum, autem debitis tempore. Voluptate, adipisci temporibus possimus repellat sequi cumque hic veritatis a obcaecati perspiciatis commodi fugit quam amet magni est ut facere. Ullam cum veritatis saepe in debitis quia neque culpa eveniet nam non animi totam autem ad voluptas, distinctio dignissimos. Tenetur et consectetur rerum placeat delectus, ea quaerat accusamus harum laudantium obcaecati temporibus repudiandae aut a nulla at cum incidunt itaque aliquid impedit qui dolorum totam sed maxime aperiam? Molestias provident rem maiores repellendus necessitatibus suscipit fugiat beatae ullam nobis tempore eius similique aut porro inventore architecto dolorem et, aliquam quisquam omnis debitis quibusdam tenetur odio placeat. Mollitia asperiores laboriosam aliquid minima necessitatibus quasi! Sunt fugiat, ab atque aperiam saepe alias eum quae culpa consequatur facere libero incidunt enim quam? Cupiditate cumque, consectetur corporis quaerat mollitia provident nobis nisi dignissimos incidunt est asperiores magnam sequi hic deserunt vel voluptates, ipsum ex autem unde odio perspiciatis omnis, accusamus voluptatum. Natus facere veritatis sit facilis repellendus sapiente! Culpa facere optio sint magnam,"
+
     },
     {
         id: 10100002,
@@ -395,13 +357,6 @@ export const carts = [
         description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus optio natus minima qui dolor harum voluptas voluptates nemo quas quidem expedita blanditiis dicta repudiandae veritatis exercitationem sint dolorum unde eum, autem debitis tempore. Voluptate, adipisci temporibus possimus repellat sequi cumque hic veritatis a obcaecati perspiciatis commodi fugit quam amet magni est ut facere. Ullam cum veritatis saepe in debitis quia neque culpa eveniet nam non animi totam autem ad voluptas, distinctio dignissimos. Tenetur et consectetur rerum placeat delectus, ea quaerat accusamus harum laudantium obcaecati temporibus repudiandae aut a nulla at cum incidunt itaque aliquid impedit qui dolorum totam sed maxime aperiam? Molestias provident rem maiores repellendus necessitatibus suscipit fugiat beatae ullam nobis tempore eius similique aut porro inventore architecto dolorem et, aliquam quisquam omnis debitis quibusdam tenetur odio placeat. Mollitia asperiores laboriosam aliquid minima necessitatibus quasi! Sunt fugiat, ab atque aperiam saepe alias eum quae culpa consequatur facere libero incidunt enim quam? Cupiditate cumque, consectetur corporis quaerat mollitia provident nobis nisi dignissimos incidunt est asperiores magnam sequi hic deserunt vel voluptates, ipsum ex autem unde odio perspiciatis omnis, accusamus voluptatum. Natus facere veritatis sit facilis repellendus sapiente! Culpa facere optio sint magnam,"
     }
 ];
-
-
-
-
-
-
-
 export const comments = [
     {
         id: 1,
@@ -422,15 +377,54 @@ export const comments = [
         dislikes: 3,
     },
 ];
+export const back = () => window.history.back()
+
+export const checkScreenSize = () => window.innerWidth >= 1312
 
 
+/**
+ * 
+ * @returns {String} pathname
+ */
+export const getUrlPathName = () => {
+    const { pathname } = useLocation();
+    return pathname
+}
+
+/**
+ * 
+ * @param {Number} num 
+ * @returns {String} num
+ */
+export const formatLikesCount = (num) => {
+    if (num >= 1000 && num < 1000000) {
+        return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+    }
+    if (num >= 1000000) {
+        return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+    }
+    return num.toString();
+}
 
 
-// export const carts = new Array(40).fill(null).map(() => ({
-//     id: Math.floor(Math.random() * 10000000),
-//     ...object
-// }));
+/**
+ * 
+ * @param {String} input 
+ * @returns {String} name
+ */
+export const sanitizeString = (string) => {
+    const baseName = string.replace(/\.[^/.]+$/, "");
+    const name = baseName.replace(/[^a-zA-Z0-9 ]/g, " ");
+    return name
+}
 
 
-
+/**
+ * 
+ * @returns {Boolean}
+ */
+export const compontShouldShowOnSignUpAndSignIn = () => {
+    return !(getUrlPathName().toLocaleLowerCase().includes("signin")
+        || getUrlPathName().toLocaleLowerCase().includes("signup"))
+}
 

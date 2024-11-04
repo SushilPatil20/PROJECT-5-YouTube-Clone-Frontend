@@ -1,22 +1,30 @@
-// EditVideoData.js
 import React, { useState } from "react";
 import { useParams } from "react-router";
 import { TextField, Avatar, Button } from "@mui/material";
 import { VideoLibrary, Image, Movie } from "@mui/icons-material";
 import { carts } from "../../utils/helpers";
 import Back from "../Back";
+import { useFormValidation } from "../../validations/useFormValidation";
+import {
+  videoSchema,
+  thumbnailSchema,
+  videoUploadSchema,
+} from "../../validations/videoDetailsSchema";
 
 const EditVideoData = () => {
   const { videoId } = useParams();
   const video = carts.find((video) => video.id === Number(videoId));
+  const { register, handleSubmit, errors } = useFormValidation(videoSchema);
 
   const [videoData, setVideoData] = useState({
-    title: video?.title || "",
-    description: video?.description || "",
-    thumbnailUrl: video?.thumbnail || "",
-    videoFile: video?.file || null,
+    title: video?.title || null,
+    description: video?.description || null,
+    thumbnailUrl: video?.thumbnail || null,
+    videoFile: video?.url || null,
     newThumbnailUrl: null,
     newVideoFile: null,
+    thumbnailError: null,
+    videoError: null,
   });
 
   const handleInputChange = (e) => {
@@ -24,23 +32,57 @@ const EditVideoData = () => {
     setVideoData({ ...videoData, [name]: value });
   };
 
-  const handleThumbnailChange = (e) => {
-    const file = e.target.files[0];
-    setVideoData({ ...videoData, newThumbnailUrl: file });
+  const validateThumbnail = async (thumbnail) => {
+    try {
+      const thumbnailFile = await thumbnailSchema.validate({ thumbnail });
+      setVideoData((prevData) => ({
+        ...prevData,
+        newThumbnailUrl: thumbnailFile.thumbnail,
+        thumbnailError: null,
+      }));
+    } catch (error) {
+      setVideoData((prevData) => ({
+        ...prevData,
+        thumbnailError: error.message,
+      }));
+    }
   };
 
-  const handleVideoChange = (e) => {
-    const file = e.target.files[0];
-    setVideoData({ ...videoData, newVideoFile: file });
+  const validateVideo = async (file) => {
+    try {
+      const validVideo = await videoUploadSchema.validate({ file });
+      setVideoData((prevData) => ({
+        ...prevData,
+        newVideoFile: validVideo.file,
+        videoError: null,
+      }));
+    } catch (error) {
+      setVideoData((prevData) => ({
+        ...prevData,
+        videoError: error.message,
+      }));
+    }
   };
 
-  const handleSave = () => {
-    console.log("Updated Video Data:", videoData);
+  const onSubmit = (data) => {
+    const { videoError, thumbnailError } = videoData;
+    if (!videoError && !thumbnailError) {
+      const mergedData = {
+        ...data,
+        ...videoData,
+      };
+      console.log("Merged Data:", mergedData);
+    } else {
+      console.log("Solve errors first");
+    }
   };
 
   return (
     <div className="flex flex-col md:flex-row items-center py-8 px-6 space-y-6 md:space-y-0 md:space-x-8 w-full mx-auto">
-      <div className="w-full bg-white shadow-lg rounded-lg p-4">
+      <form
+        className="w-full bg-white shadow-lg rounded-lg p-4"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <Back className="-ml-1 mb-4" />
         <div className="flex items-center space-x-2 mb-6">
           <Avatar sx={{ bgcolor: "red" }}>
@@ -53,25 +95,39 @@ const EditVideoData = () => {
 
         <section className="flex flex-col md:flex-row space-x-6">
           <div className="md:w-1/2 space-y-6 z-0">
-            <TextField
-              label="Video Title"
-              name="title"
-              fullWidth
-              variant="outlined"
-              value={videoData.title}
-              onChange={handleInputChange}
-            />
+            <div>
+              <TextField
+                label="Video Title"
+                {...register("title")}
+                fullWidth
+                variant="outlined"
+                value={videoData.title}
+                onChange={handleInputChange}
+              />
+              {errors.title && (
+                <p className="text-red-600 text-left mt-2">
+                  {errors.title.message}
+                </p>
+              )}
+            </div>
 
-            <TextField
-              label="Description"
-              name="description"
-              fullWidth
-              variant="outlined"
-              multiline
-              rows={4}
-              value={videoData.description}
-              onChange={handleInputChange}
-            />
+            <div>
+              <TextField
+                label="Description"
+                {...register("description")}
+                fullWidth
+                variant="outlined"
+                multiline
+                rows={4}
+                value={videoData.description}
+                onChange={handleInputChange}
+              />
+              {errors.description && (
+                <p className="text-red-600 text-left mt-2">
+                  {errors.description.message}
+                </p>
+              )}
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-6 md:mt-0">
@@ -87,7 +143,7 @@ const EditVideoData = () => {
                 type="file"
                 id="thumbnail"
                 accept="image/*"
-                onChange={handleThumbnailChange}
+                onChange={(e) => validateThumbnail(e.target.files[0])}
                 className="hidden"
               />
               <div className="flex justify-between items-center space-x-4">
@@ -114,6 +170,11 @@ const EditVideoData = () => {
                   </div>
                 )}
               </div>
+              {videoData.thumbnailError && (
+                <p className="text-red-600 text-left mt-2">
+                  {videoData.thumbnailError}
+                </p>
+              )}
             </div>
 
             <div>
@@ -128,7 +189,7 @@ const EditVideoData = () => {
                 type="file"
                 id="videoFile"
                 accept="video/*"
-                onChange={handleVideoChange}
+                onChange={(e) => validateVideo(e.target.files[0])}
                 className="hidden"
               />
               <div className="flex justify-between items-center space-x-4">
@@ -155,21 +216,24 @@ const EditVideoData = () => {
                   </div>
                 )}
               </div>
+              {videoData.videoError && (
+                <p className="text-red-600 text-left mt-2">
+                  {videoData.videoError}
+                </p>
+              )}
             </div>
           </div>
         </section>
-
-        <div className="w-60 mx-auto mt-8 ">
-          <Button
-            onClick={handleSave}
+        <div className="w-full md:w-60 mx-auto mt-8 ">
+          <button
+            type="submit"
             variant="contained"
-            color="primary"
-            fullWidth
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg mx-auto block"
           >
             Save Changes
-          </Button>
+          </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

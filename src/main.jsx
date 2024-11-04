@@ -11,12 +11,9 @@ import ChannelPage from "./components/ChannelPage.jsx";
 import VideoManagementDashboard from "./components/videoComponents/VideoManagementDashboard.jsx";
 import store from "./store/store.js";
 import EditVideoData from "./components/videoComponents/EditVideoData.jsx";
-
 const WatchPage = lazy(() =>
   import("./components/videoListongComponent/Watch.jsx")
 );
-
-// import WatchPage from "./components/videoListongComponent/Watch.jsx";
 
 const appRouter = createBrowserRouter([
   {

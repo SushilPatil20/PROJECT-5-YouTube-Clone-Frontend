@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Edit, Delete } from "@mui/icons-material";
 import PaginationControls from "./PaginationControls";
 import { Tooltip } from "@mui/material";
@@ -10,21 +10,13 @@ import { useNavigate } from "react-router";
 import Back from "../Back";
 import IfNotContent from "../IfNotContent";
 
-// pagination
-// border content
-
-const VideoManagementTable = ({ videosData, onVideoUpdate, onVideoDelete }) => {
+const VideoManagementTable = () => {
   // const carts = [];
-  const [filteredVideos, setFilteredVideos] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isModalOpen = useSelector((state) => state.videoModel.isOpen);
   const handleVideoUploadModal = () => dispatch(toggleModal());
-
-  useEffect(() => {
-    setFilteredVideos(videosData);
-  }, [videosData]);
 
   const handleDeleteClick = (videoId) => {
     onVideoDelete(videoId);
@@ -40,14 +32,16 @@ const VideoManagementTable = ({ videosData, onVideoUpdate, onVideoDelete }) => {
     <div className="max-w-7xl  px-6">
       <div className="flex justify-between items-center">
         <Back />
-        <div>
-          <button
-            onClick={handleVideoUploadModal}
-            className="text-blue-500 text-sm cursor-pointer"
-          >
-            Upload New Video
-          </button>
-        </div>
+        {carts.length > 0 && (
+          <div>
+            <button
+              onClick={handleVideoUploadModal}
+              className="text-blue-500 text-sm cursor-pointer"
+            >
+              Upload New Video
+            </button>
+          </div>
+        )}
       </div>
       {carts.length > 0 ? (
         <div className="overflow-x-auto h-96 overflow-y-scroll no-scrollbar border">
@@ -120,12 +114,18 @@ const VideoManagementTable = ({ videosData, onVideoUpdate, onVideoDelete }) => {
       ) : (
         <div className="flex items-center flex-col text-center">
           <IfNotContent />
+          <button
+            onClick={handleVideoUploadModal}
+            className="cursor-pointer mt-6 text-sm hover:bg-gray-800 bg-black text-white px-4 py-2 rounded-3xl"
+          >
+            Create
+          </button>
         </div>
       )}
 
       {carts.length > 0 && (
         <PaginationControls
-          totalItems={filteredVideos.length}
+          totalItems={carts.length}
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={setCurrentPage}
@@ -138,16 +138,6 @@ const VideoManagementTable = ({ videosData, onVideoUpdate, onVideoDelete }) => {
           onClose={handleVideoUploadModal}
         />
       )}
-
-      {/* Video Action Modal */}
-      {/* {showModal && (
-        <VideoActionModal
-          open={showModal}
-          onClose={() => setShowModal(false)}
-          video={selectedVideo}
-          onSave={onVideoUpdate}
-        />
-      )} */}
     </div>
   );
 };
