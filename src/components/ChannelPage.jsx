@@ -2,7 +2,7 @@ import React from "react";
 import VideoUploadModal from "../components/videoComponents/VideoUploadModel";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleModal } from "../store/slice/modalSlice";
+import { toggleModal } from "../redux/slice/modalSlice";
 import IfNotContent from "./IfNotContent";
 // import { carts } from "../utils/helpers";
 
@@ -34,7 +34,10 @@ const ChannelPage = () => {
             </p>
           </div>
           <div className="flex gap-2 mt-3">
-            <button className="text-sm bg-gray-100 font-semibold text-gray-800 rounded-3xl px-4 py-2 hover:bg-gray-200">
+            <button
+              onClick={() => navigate("/channel-management-dashboard")}
+              className="text-sm bg-gray-100 font-semibold text-gray-800 rounded-3xl px-4 py-2 hover:bg-gray-200"
+            >
               Customise Channel
             </button>
             <button

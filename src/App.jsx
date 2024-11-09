@@ -5,11 +5,13 @@ import Sidebar from "./components/sideBarComponent/SideBar";
 import { checkScreenSize, getUrlPathName } from "./utils/helpers.js";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import { compontShouldShowOnSignUpAndSignIn } from "./utils/helpers.js";
+import { useUrlPathName } from "./customeHooks/useUrlPathName.js";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const containerRef = useRef(null);
   const isWatchPage = getUrlPathName().includes("watch");
+  const currenUrl = useUrlPathName();
 
   // useEffect(() => {
   //   const handleResize = () => {
@@ -30,7 +32,7 @@ function App() {
       <div className="flex flex-col h-screen">
         <Header toggleSidebar={toggleSidebar} className="flex-shrink-0" />
         <main className="flex flex-1 overflow-hidden relative">
-          {compontShouldShowOnSignUpAndSignIn() && (
+          {compontShouldShowOnSignUpAndSignIn(currenUrl) && (
             <Sidebar
               isOpen={isSidebarOpen}
               toggleSidebar={toggleSidebar}

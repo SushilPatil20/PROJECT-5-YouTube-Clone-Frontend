@@ -423,8 +423,7 @@ export const sanitizeString = (string) => {
  * 
  * @returns {Boolean}
  */
-export const compontShouldShowOnSignUpAndSignIn = () => {
-    return !(getUrlPathName().toLocaleLowerCase().includes("signin")
-        || getUrlPathName().toLocaleLowerCase().includes("signup"))
+export const compontShouldShowOnSignUpAndSignIn = (pathName) => {
+    if (pathName) return !(pathName.toLocaleLowerCase().includes("signin") || pathName.toLocaleLowerCase().includes("signup"))
 }
 

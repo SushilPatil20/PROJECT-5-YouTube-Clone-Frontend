@@ -9,26 +9,31 @@ import { ArrowBack } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
 import { compontShouldShowOnSignUpAndSignIn } from "../../utils/helpers";
 import ProfilePopover from "./ProfilePopover";
+import useAuth from "../../customeHooks/useAuth";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/slice/authSlice";
+import { useUrlPathName } from "../../customeHooks/useUrlPathName";
 
 const Header = ({ toggleSidebar }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 660);
   const [isSearchClick, setIsSearchClick] = useState(false);
-  const [isSignIn, setIsSignIn] = useState(true);
-
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
   const open = Boolean(anchorEl);
+  const { isAuthenticated } = useAuth();
+  const dispatch = useDispatch();
+  const currenUrl = useUrlPathName();
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 660);
-    };
+    const handleResize = () => setIsMobile(window.innerWidth < 660);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  return compontShouldShowOnSignUpAndSignIn() ? (
+  const handleLogout = () => dispatch(logout());
+
+  return compontShouldShowOnSignUpAndSignIn(currenUrl) ? (
     <>
       {isSearchClick ? (
         <header className="flex items-center justify-between pl-1 bg-white sticky top-0 pr-6 py-2 lg:hidden md:hidden">
@@ -94,7 +99,7 @@ const Header = ({ toggleSidebar }) => {
             </span>
 
             <div className="flex items-center space-x-2">
-              {!isSignIn ? (
+              {!isAuthenticated ? (
                 <Link to={"/signin"}>
                   <div className="flex items-center text-blue-600 space-x-2 px-3 md:px-4 py-2 border rounded-3xl hover:bg-blue-100 hover:border-blue-100 duration-100 w-26 md:w-28">
                     <Person
@@ -131,7 +136,7 @@ const Header = ({ toggleSidebar }) => {
                     handleClose={handleClose}
                     anchorEl={anchorEl}
                     open={open}
-                    onSignOut={setIsSignIn}
+                    onLogout={handleLogout}
                   />
                 </>
               )}

@@ -12,7 +12,7 @@ const VideoListing = () => {
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 py-2 gap-4">
         {carts.map((cart, index) => (
           <div onClick={() => navigate(`/watch/${cart.id}`)} key={index}>
-            <div className="min-h-72 mx-auto sm:w-fit md:w-full md:mb-4">
+            <div className="min-h-72 mx-auto cursor-pointer sm:w-fit md:w-full md:mb-4">
               <div>
                 <img
                   className="rounded-lg"

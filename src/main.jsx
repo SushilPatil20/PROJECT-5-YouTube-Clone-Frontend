@@ -9,8 +9,11 @@ import Login from "./components/authenticationPages/Login.jsx";
 import VideoListing from "./components/videoListongComponent/VideoListing.jsx";
 import ChannelPage from "./components/ChannelPage.jsx";
 import VideoManagementDashboard from "./components/videoComponents/VideoManagementDashboard.jsx";
-import store from "./store/store.js";
+import store from "./redux/store.js";
 import EditVideoData from "./components/videoComponents/EditVideoData.jsx";
+import ChannelManagement from "./components/ChannelManagement.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import CustomErrorPage from "./components/CustomErrorPage.jsx";
 const WatchPage = lazy(() =>
   import("./components/videoListongComponent/Watch.jsx")
 );
@@ -42,24 +45,51 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/channel-page",
-        element: <ChannelPage />,
+        element: (
+          <ProtectedRoute>
+            <ChannelPage />,
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/channel-management-dashboard",
+        element: (
+          <ProtectedRoute>
+            <ChannelManagement />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/video-management-dashboard",
-        element: <VideoManagementDashboard />,
+        element: (
+          <ProtectedRoute>
+            <VideoManagementDashboard />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/video-edit-page/:videoId",
-        element: <EditVideoData />,
+        element: (
+          <ProtectedRoute>
+            <EditVideoData />
+          </ProtectedRoute>
+        ),
       },
     ],
+    errorElement: <CustomErrorPage />,
   },
 ]);
 
-createRoot(document.getElementById("root")).render(
-  // <StrictMode>
-  <Provider store={store}>
-    <RouterProvider router={appRouter}></RouterProvider>
-  </Provider>
-  // </StrictMode>
+let root;
+
+if (!root) {
+  root = createRoot(document.getElementById("root"));
+}
+
+root.render(
+  <StrictMode>
+    <Provider store={store}>
+      <RouterProvider router={appRouter}></RouterProvider>
+    </Provider>
+  </StrictMode>
 );

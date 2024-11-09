@@ -5,7 +5,7 @@ import CreateChannelPopover from "./CreateChannelPopover";
 import { AddCircle } from "@mui/icons-material";
 import { useNavigate } from "react-router";
 
-const ProfilePopover = ({ handleClose, anchorEl, open, onSignOut }) => {
+const ProfilePopover = ({ handleClose, anchorEl, open, onLogout }) => {
   const navigation = useNavigate();
   const [isCreateChannelOpen, setCreateChannelOpen] = useState(false);
   const [channels, setChannels] = useState(["channel1"]);
@@ -82,7 +82,7 @@ const ProfilePopover = ({ handleClose, anchorEl, open, onSignOut }) => {
             </div>
           )}
           <div
-            onClick={() => onSignOut(false)}
+            onClick={onLogout}
             className="px-5 py-2 hover:bg-gray-100 space-x-4 cursor-pointer"
           >
             <Logout className="text-gray-600" />

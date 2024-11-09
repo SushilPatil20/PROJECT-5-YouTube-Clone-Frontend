@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import youtubeLogo from "../../assets/youtube-logo.png";
 
 const YouTubeLogo = () => {
   return (
@@ -12,11 +13,7 @@ const YouTubeLogo = () => {
           IN
         </span>
         <div className="w-24 md:w-28">
-          <img
-            src="https://cdn.mos.cms.futurecdn.net/8gzcr6RpGStvZFA2qRt4v6.jpg"
-            alt="YouTube-logo"
-            // loading="lazy"
-          />
+          <img src={youtubeLogo} alt="YouTube-logo" />
         </div>
       </div>
     </Link>

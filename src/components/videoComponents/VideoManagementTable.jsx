@@ -4,7 +4,7 @@ import PaginationControls from "./PaginationControls";
 import { Tooltip } from "@mui/material";
 import { carts, formatLikesCount } from "../../utils/helpers";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleModal } from "../../store/slice/modalSlice";
+import { toggleModal } from "../../redux/slice/modalSlice";
 import VideoUploadModal from "./VideoUploadModel";
 import { useNavigate } from "react-router";
 import Back from "../Back";
@@ -29,7 +29,7 @@ const VideoManagementTable = () => {
   const currentVideos = carts.slice(indexOfFirstVideo, indexOfLastVideo);
 
   return (
-    <div className="max-w-7xl  px-6">
+    <div className="max-w-7xl">
       <div className="flex justify-between items-center">
         <Back />
         {carts.length > 0 && (
@@ -45,22 +45,36 @@ const VideoManagementTable = () => {
       </div>
       {carts.length > 0 ? (
         <div className="overflow-x-auto h-96 overflow-y-scroll no-scrollbar border">
-          <table className="min-w-full  bg-white relative">
+          <table className="w-full  bg-white relative">
             <thead className="sticky top-0 bg-white">
               <tr>
-                <th className="p-3 border-b">Video</th>
-                <th className="p-3 border-b">Date</th>
-                <th className="p-3 border-b">Views</th>
-                <th className="p-3 border-b">Comments</th>
-                <th className="p-3 border-b">Likes</th>
-                <th className="p-3 border-b">Dislikes</th>
-                <th className="p-3 border-b">Action's</th>
+                <th className="p-2 text-sm font-semibold border-b md:p-3 md:font-bold md:text-base">
+                  Video
+                </th>
+                <th className="p-2 text-sm font-semibold border-b md:p-3 md:font-bold md:text-base">
+                  Date
+                </th>
+                <th className="p-2 text-sm font-semibold border-b md:p-3 md:font-bold md:text-base">
+                  Views
+                </th>
+                <th className="p-2 text-sm font-semibold border-b md:p-3 md:font-bold md:text-base">
+                  Comments
+                </th>
+                <th className="p-2 text-sm font-semibold border-b md:p-3 md:font-bold md:text-base">
+                  Likes
+                </th>
+                <th className="p-2 text-sm font-semibold border-b md:p-3 md:font-bold md:text-base">
+                  Dislikes
+                </th>
+                <th className="p-2 text-sm font-semibold border-b md:p-3 md:font-bold md:text-base">
+                  Action's
+                </th>
               </tr>
             </thead>
             <tbody>
               {currentVideos.map((video) => (
                 <tr key={video.id}>
-                  <td className="p-3 text-center border-b">
+                  <td className="p-3 text-center border-b min-w-32">
                     <img
                       src={video.thumbnail}
                       className="w-26 h-14 block mx-auto rounded-md"
@@ -69,20 +83,22 @@ const VideoManagementTable = () => {
                       loop
                     />
                   </td>
-                  <td className="p-3 text-center border-b">
+                  <td className="p-2 md:p-3 text-center border-b min-w-32">
                     {video.uploadDate}
                   </td>
-                  <td className="p-3 text-center border-b">{video.views}</td>
-                  <td className="p-3 text-center border-b">
+                  <td className="p-2 md:p-3 text-center border-b min-w-32">
+                    {video.views}
+                  </td>
+                  <td className="p-2 md:p-3 text-center border-b min-w-32">
                     {video.comments.length}
                   </td>
-                  <td className="p-3 text-center border-b">
+                  <td className="p-2 md:p-3 text-center border-b min-w-32">
                     {formatLikesCount(video.likes)}
                   </td>
-                  <td className="p-3 text-center border-b">
+                  <td className="p-2 md:p-3 text-center border-b min-w-32">
                     {formatLikesCount(video.dislikes)}
                   </td>
-                  <td className="p-3 space-x-2 text-center border-b z-10">
+                  <td className="p-2 md:p-3 space-x-2 text-center border-b z-10 min-w-32">
                     <Tooltip
                       onClick={() => navigate(`/video-edit-page/${video.id}`)}
                       title="Edit"
