@@ -15,30 +15,31 @@ const Login = () => {
   const { register, handleSubmit, errors } = useFormValidation(signInSchema);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const onSubmit = async (credentials) => {
     try {
       setLoading(true);
-      const { token, user } = await loginUser(credentials);
+      setServerError(null);
+      const { token, user, serverError } = await loginUser(credentials);
+      if (serverError) {
+        return setServerError(serverError);
+      }
       dispatch(loginSuccess({ token, user }));
       toast.success("Login successful!", {
         position: "top-right",
         autoClose: 2000,
       });
-
-      setTimeout(() => navigate("/"), 2000);
+      navigate("/");
     } catch (error) {
       setLoading(false);
-      toast.error(
-        error?.response?.data?.error || error.message || "Login failed"
-      );
+      setServerError(error.message);
     } finally {
-      setLoading(false); // Always stop loading, even if an error occurs
+      setLoading(false);
     }
   };
-
   return (
     <div className="bg-white p-8 rounded-lg shadow-xl shadow-gray-400 mx-auto w-11/12 md:w-3/4 lg:w-1/2  mt-8">
       <ToastContainer />
@@ -82,6 +83,8 @@ const Login = () => {
         </div>
 
         <div>
+          <p className="text-red-600 mb-2">{serverError && serverError}</p>
+
           <button
             type="submit"
             className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition duration-200"

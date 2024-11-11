@@ -16,7 +16,7 @@ export const loginUser = async (credentials) => {
         const response = await api.post('/user/login', credentials, { headers: { 'Content-Type': 'application/json' } });
         return response.data
     } catch (error) {
-        console.log("Error", error.response?.data?.error)
-        // throw error.response?.data?.error || 'Login failed';
+        const serverError = await error.response?.data?.error || "Server side issue : login failed."
+        return { serverError };
     }
 };

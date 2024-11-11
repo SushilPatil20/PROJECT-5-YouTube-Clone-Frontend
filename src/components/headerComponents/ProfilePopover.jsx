@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 const ProfilePopover = ({ handleClose, anchorEl, open, onLogout }) => {
   const navigation = useNavigate();
   const [isCreateChannelOpen, setCreateChannelOpen] = useState(false);
-  const [channels, setChannels] = useState(["channel1"]);
+  const [channels, setChannels] = useState([]);
   const handleCreateChannelButton = () => {
     setCreateChannelOpen(true);
     handleClose();

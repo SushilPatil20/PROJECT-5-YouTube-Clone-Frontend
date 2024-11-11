@@ -31,7 +31,10 @@ const Header = ({ toggleSidebar }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const handleLogout = () => dispatch(logout());
+  const handleLogout = () => {
+    dispatch(logout());
+    handleClose();
+  };
 
   return compontShouldShowOnSignUpAndSignIn(currenUrl) ? (
     <>

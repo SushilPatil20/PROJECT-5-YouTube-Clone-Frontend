@@ -2,19 +2,27 @@ import React from "react";
 import { TextField, Avatar, Box, Typography } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { useNavigate } from "react-router";
+import useAuth from "../../customeHooks/useAuth";
+import { useFormValidation } from "../../validations/useFormValidation";
+import channelSchema from "../../validations/channelSchema";
 
 const CreateChannelPopover = ({ open, onClose }) => {
   if (!open) return null;
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const { register, handleSubmit, errors } = useFormValidation(channelSchema);
 
-  const handleChannelPage = () => {
+  const onSubmit = (data) => {
     onClose();
-    navigate("/channel-page");
+    // navigate("/channel-page");
+    console.log(data);
   };
 
   return (
     <div className="fixed -inset-6 flex items-center  justify-center bg-black bg-opacity-25">
-      <div
+      {console.log(errors)}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
         className="relative bg-white rounded-lg shadow-lg w-full max-w-lg md:max-w-2xl
        lg:max-w-3xl px-6 py-3 sm:m-8 lg:m-12 flex flex-col items-center text-center overflow-hidden"
         style={{ height: "85%" }}
@@ -34,11 +42,9 @@ const CreateChannelPopover = ({ open, onClose }) => {
             src="https://yt3.ggpht.com/a/default-user=s200-c-k-c0x00ffffff-no-rj"
             alt=""
           />
-          {/* <PersonIcon fontSize="large" /> */}
         </div>
 
-        {/* Select Picture Text */}
-        <div className="mb-6">
+        {/* <div className="mb-6">
           <label
             htmlFor="channelImage"
             className="text-blue-600 font-roboto font-semibold text-sm cursor-pointer mb-6"
@@ -46,23 +52,41 @@ const CreateChannelPopover = ({ open, onClose }) => {
             Select Picture
           </label>
           <input type="file" id="channelImage" className="hidden" />
-        </div>
+        </div> */}
 
-        <div className="mx-auto mb-12 w-4/5 md:w-3/5">
-          {/* Channel Name Input */}
-          <Box className="w-full mb-4">
-            <TextField label="Name" fullWidth variant="outlined" />
-          </Box>
+        <div className="mx-auto mb-12 w-4/5 md:w-3/5 space-y-4">
+          <div>
+            <Box className="w-full ">
+              <TextField
+                label="Name"
+                {...register("channelName")}
+                fullWidth
+                variant="outlined"
+              />
+            </Box>
+            {errors.channelName && (
+              <p className="text-red-600 text-left text-sm mt-1 mb-4">
+                {errors.channelName.message}
+              </p>
+            )}
+          </div>
 
-          {/* Handle Input */}
-          <Box className="w-full">
-            <TextField
-              label="Handle"
-              placeholder="@SushilPatil-h9"
-              fullWidth
-              variant="outlined"
-            />
-          </Box>
+          <div>
+            <Box className="w-full">
+              <TextField
+                label="Handle"
+                placeholder="e.g @username-h9"
+                {...register("handle")}
+                fullWidth
+                variant="outlined"
+              />
+            </Box>
+            {errors.handle && (
+              <p className="text-red-600 text-left text-sm mt-1 mb-4">
+                {errors.handle.message}
+              </p>
+            )}
+          </div>
         </div>
 
         {/* Agreement Text */}
@@ -85,7 +109,8 @@ const CreateChannelPopover = ({ open, onClose }) => {
             Cancel
           </button>
           <button
-            onClick={handleChannelPage}
+            // onClick={handleChannelPage}
+            type="submit"
             className="cursor-pointer px-4 py-2 rounded-3xl font-roboto hover:bg-blue-100 text-blue-800 text-sm"
             color="primary"
             variant="text"
@@ -93,7 +118,7 @@ const CreateChannelPopover = ({ open, onClose }) => {
             Create Channel
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

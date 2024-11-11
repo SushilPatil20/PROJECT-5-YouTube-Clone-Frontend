@@ -7,13 +7,13 @@ const initialState = {
     error: null,
 };
 
-
 const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
         loginSuccess: (state, action) => {
             state.user = action.payload.user;
+            console.log(state.user)
             state.token = action.payload.token;
             state.isAuthenticated = true;
             localStorage.setItem("authToken", action.payload.token); // Remove token from localStorage
