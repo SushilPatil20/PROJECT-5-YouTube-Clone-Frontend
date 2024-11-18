@@ -7,16 +7,17 @@ import { Provider } from "react-redux";
 import SignUp from "./components/authenticationPages/SignUp.jsx";
 import Login from "./components/authenticationPages/Login.jsx";
 import VideoListing from "./components/videoListongComponent/VideoListing.jsx";
-import ChannelPage from "./components/ChannelPage.jsx";
+import ChannelPage from "./components/channelComponents/ChannelPage.jsx";
 import VideoManagementDashboard from "./components/videoComponents/VideoManagementDashboard.jsx";
 import store from "./redux/store.js";
 import EditVideoData from "./components/videoComponents/EditVideoData.jsx";
-import ChannelManagement from "./components/ChannelManagement.jsx";
+import ChannelManagement from "./components/channelComponents/ChannelManagement.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import CustomErrorPage from "./components/CustomErrorPage.jsx";
 const WatchPage = lazy(() =>
   import("./components/videoListongComponent/Watch.jsx")
 );
+import AuthGuard from "./middlewares/AuthGuard.jsx";
 
 const appRouter = createBrowserRouter([
   {
@@ -44,35 +45,31 @@ const appRouter = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "/channel-page",
-        element: (
-          <ProtectedRoute>
-            <ChannelPage />,
-          </ProtectedRoute>
-        ),
+        path: "/:channelHandle",
+        element: <ChannelPage />,
       },
       {
-        path: "/channel-management-dashboard",
+        path: "channel/:channelId/editing/",
         element: (
-          <ProtectedRoute>
+          <AuthGuard>
             <ChannelManagement />
-          </ProtectedRoute>
+          </AuthGuard>
         ),
       },
       {
         path: "/video-management-dashboard",
         element: (
-          <ProtectedRoute>
+          <AuthGuard>
             <VideoManagementDashboard />
-          </ProtectedRoute>
+          </AuthGuard>
         ),
       },
       {
         path: "/video-edit-page/:videoId",
         element: (
-          <ProtectedRoute>
+          <AuthGuard>
             <EditVideoData />
-          </ProtectedRoute>
+          </AuthGuard>
         ),
       },
     ],

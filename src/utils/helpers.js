@@ -1,4 +1,7 @@
 import { useLocation } from "react-router"
+import { jwtDecode } from "jwt-decode"; // Install with: npm install jwt-decode
+
+
 export const carts = [
     {
         id: 10100001,
@@ -427,3 +430,26 @@ export const compontShouldShowOnSignUpAndSignIn = (pathName) => {
     if (pathName) return !(pathName.toLocaleLowerCase().includes("signin") || pathName.toLocaleLowerCase().includes("signup"))
 }
 
+
+export const storeLocal = (key, value) => {
+    return localStorage.setItem(key, value);
+}
+
+export const removeLocal = (key) => {
+    return localStorage.removeItem(key);
+}
+
+export const getLocal = (key) => {
+    return localStorage.getItem(key);
+}
+
+
+export const tokenValidator = (token) => {
+    try {
+        const decoded = jwtDecode(token);
+        const currentTime = Date.now() / 1000;
+        return decoded.exp > currentTime;
+    } catch (error) {
+        return false;
+    }
+};

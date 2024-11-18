@@ -1,31 +1,43 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getLocal, removeLocal, storeLocal } from "../../utils/helpers";
 
 const initialState = {
-    token: localStorage.getItem("authToken") || null, // Retrieve token from localStorage if available
-    isAuthenticated: Boolean(localStorage.getItem("authToken")),
-    user: null,
-    error: null,
+    token: getLocal("authToken") || null, // Retrieve token from localStorage
+    isAuthenticated: Boolean(getLocal("authToken")), // Boolean flag for authentication status
+    userId: getLocal("userId") || null, // Retrieve userId if available
 };
 
 const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
+        // Handle successful login
         loginSuccess: (state, action) => {
-            state.user = action.payload.user;
-            console.log(state.user)
-            state.token = action.payload.token;
+            const { token, userId } = action.payload; // Destructure payload
+            state.token = token;
+            state.userId = userId;
             state.isAuthenticated = true;
-            localStorage.setItem("authToken", action.payload.token); // Remove token from localStorage
+
+            // Persist data to localStorage
+            storeLocal("authToken", token);
+            storeLocal("userId", userId);
         },
+
+        // Handle logout and clear stored data
         logout: (state) => {
             state.token = null;
+            state.userId = null;
             state.isAuthenticated = false;
-            state.user = null;
-            localStorage.removeItem("authToken"); // Remove token from localStorage
-        },
-    }
-})
 
-export const { logout, loginSuccess } = authSlice.actions
-export default authSlice.reducer
+            // Clear data from localStorage
+            removeLocal("authToken");
+            removeLocal("userId");
+        }
+    },
+});
+
+// Export actions for use in components
+export const { loginSuccess, logout } = authSlice.actions;
+
+// Export the reducer for integration with the store
+export default authSlice.reducer;

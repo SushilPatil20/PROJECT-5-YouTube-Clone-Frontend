@@ -1,26 +1,24 @@
-import React from "react";
-import { TextField, Avatar, Box, Typography } from "@mui/material";
-import PersonIcon from "@mui/icons-material/Person";
+import React, { useEffect } from "react";
+import { TextField, Box } from "@mui/material";
 import { useNavigate } from "react-router";
-import useAuth from "../../customeHooks/useAuth";
 import { useFormValidation } from "../../validations/useFormValidation";
 import channelSchema from "../../validations/channelSchema";
+import { createChannel } from "../../services/channelServices";
 
 const CreateChannelPopover = ({ open, onClose }) => {
   if (!open) return null;
   const navigate = useNavigate();
-  const { user } = useAuth();
   const { register, handleSubmit, errors } = useFormValidation(channelSchema);
-
-  const onSubmit = (data) => {
-    onClose();
-    // navigate("/channel-page");
-    console.log(data);
+  const onSubmit = async (channelData) => {
+    if (channelData) {
+      await createChannel(channelData);
+      onClose();
+      navigate(`/${channelData.handle}`);
+    }
   };
 
   return (
-    <div className="fixed -inset-6 flex items-center  justify-center bg-black bg-opacity-25">
-      {console.log(errors)}
+    <div className="fixed -inset-6 flex items-center justify-center bg-black bg-opacity-25">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="relative bg-white rounded-lg shadow-lg w-full max-w-lg md:max-w-2xl

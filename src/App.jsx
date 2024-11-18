@@ -6,12 +6,14 @@ import { checkScreenSize, getUrlPathName } from "./utils/helpers.js";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import { compontShouldShowOnSignUpAndSignIn } from "./utils/helpers.js";
 import { useUrlPathName } from "./customeHooks/useUrlPathName.js";
+import useAuth from "./customeHooks/useAuth.js";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const containerRef = useRef(null);
   const isWatchPage = getUrlPathName().includes("watch");
   const currenUrl = useUrlPathName();
+  const { user } = useAuth();
 
   // useEffect(() => {
   //   const handleResize = () => {

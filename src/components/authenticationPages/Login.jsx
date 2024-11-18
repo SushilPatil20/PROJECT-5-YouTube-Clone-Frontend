@@ -23,15 +23,17 @@ const Login = () => {
     try {
       setLoading(true);
       setServerError(null);
-      const { token, user, serverError } = await loginUser(credentials);
+
+      const { token, userId, serverError } = await loginUser(credentials);
       if (serverError) {
         return setServerError(serverError);
       }
-      dispatch(loginSuccess({ token, user }));
+      dispatch(loginSuccess({ token, userId }));
       toast.success("Login successful!", {
         position: "top-right",
         autoClose: 2000,
       });
+
       navigate("/");
     } catch (error) {
       setLoading(false);
