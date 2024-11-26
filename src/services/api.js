@@ -14,19 +14,18 @@ api.interceptors.request.use((config) => {
 }, (error) => Promise.reject(error))
 
 
-// Response Interceptor: Handle invalid/expired token
-// api.interceptors.response.use(
-//     (response) => response,
-//     (error) => {
-//         if (error.response && error.response.status === 401 || error.response && error.response.status === 403) {
-//             removeLocal("authToken")
-//             removeLocal("userId")
-//             window.location.href = '/login';
-//         }
-//         return Promise.reject(error);
-//     }
-// );
-
+// Response Interceptor: Handle invalid / expired token
+api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response && error.response.status === 401 || error.response && error.response.status === 403) {
+            removeLocal("authToken")
+            removeLocal("userId")
+            window.location.href = '/signin';
+        }
+        return Promise.reject(error);
+    }
+);
 export default api;
 
 

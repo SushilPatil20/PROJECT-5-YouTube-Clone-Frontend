@@ -10,13 +10,14 @@ const ProfilePopover = ({ handleClose, anchorEl, open, onLogout }) => {
   const navigation = useNavigate();
   const [isCreateChannelOpen, setCreateChannelOpen] = useState(false);
   const { user } = useAuth();
+
   const handleCreateChannelButton = () => {
     setCreateChannelOpen(true);
     handleClose();
   };
 
   const handleNavigation = () => {
-    navigation(`/${user.user.channels[0].handle}`);
+    navigation(`/channel/${user.user.channels[1].handle}`);
     handleClose();
   };
 

@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from "react";
-import VideoUploadModal from "../videoComponents/VideoUploadModel";
+import VideoUploadModal from "../videoComponents/VideoUploadModel.jsx";
 import { useNavigate, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleModal } from "../../redux/slice/modalSlice";
-import IfNotContent from "../IfNotContent";
-import { getChannelByHandle } from "../../services/channelServices";
+import { toggleModal } from "../../redux/slice/modalSlice.js";
+import IfNotContent from "../IfNotContent.jsx";
+import { getChannelByHandle } from "../../services/channelServices.js";
+import { formatTimeAgo } from "../../utils/helpers.js";
+import useAuth from "../../customeHooks/useAuth.js";
 
 const ChannelPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isModalOpen = useSelector((state) => state.videoModel.isOpen);
+  const { isAuthenticated } = useAuth();
   const handleVideoUploadModal = () => dispatch(toggleModal());
   const [channel, setChannel] = useState({});
   const [videos, setVideos] = useState([]);
   const { channelHandle } = useParams();
 
   useEffect(() => {
-    const fetchChannel = async (handle) => {
+    const fetchChannel = async (channelHandle) => {
       try {
-        const channel = await getChannelByHandle(handle);
+        const channel = await getChannelByHandle(channelHandle);
         setChannel(channel);
-        setVideos(channel.owner.videos);
+        setVideos(channel.videos);
       } catch (error) {
         console.log(error);
       }
@@ -29,7 +32,14 @@ const ChannelPage = () => {
   }, [channelHandle]);
 
   return (
-    <div className="w-full  max-w-7xl font-roboto ml-auto">
+    <div className="w-full pb-14 max-w-7xl font-roboto ml-auto">
+      <div className="h-44 w-full md:px-8">
+        <img
+          className="w-full h-full object-cover rounded-2xl"
+          src={channel.channelBanner && channel.channelBanner}
+          alt={channel.channelName + "-image"}
+        />
+      </div>
       <div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-4 md:px-8 pt-5">
         <img
           src={channel.owner && channel.owner.avatar}
@@ -49,20 +59,22 @@ const ChannelPage = () => {
               <span className="text-black font-roboto">...more</span>
             </p>
           </div>
-          <div className="flex gap-2 mt-3">
-            <button
-              onClick={() => navigate(`/channel/${channel._id}/editing`)}
-              className="text-sm bg-gray-100 font-semibold text-gray-800 rounded-3xl px-4 py-2 hover:bg-gray-200"
-            >
-              Customise Channel
-            </button>
-            <button
-              onClick={() => navigate("/video-management-dashboard")}
-              className="text-sm bg-gray-100 font-semibold text-gray-800 rounded-3xl px-4 py-2 hover:bg-gray-200"
-            >
-              Manage Videos
-            </button>
-          </div>
+          {isAuthenticated && (
+            <div className="flex gap-2 mt-3">
+              <button
+                onClick={() => navigate(`/channel/${channel._id}/editing`)}
+                className="text-sm bg-gray-100 font-semibold text-gray-800 rounded-3xl px-4 py-2 hover:bg-gray-200"
+              >
+                Customise Channel
+              </button>
+              <button
+                onClick={() => navigate("/video-management-dashboard")}
+                className="text-sm bg-gray-100 font-semibold text-gray-800 rounded-3xl px-4 py-2 hover:bg-gray-200"
+              >
+                Manage Videos
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <section>
@@ -76,15 +88,42 @@ const ChannelPage = () => {
                 Posts
               </li>
             </ul>
-            <p>Content</p>
+            <div className="px-9">
+              <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                {videos &&
+                  videos.map((video) => (
+                    <div
+                      key={video._id}
+                      className="group relative bg-white rounded-md shadow hover:shadow-lg overflow-hidden"
+                    >
+                      <div className="relative">
+                        <img
+                          src={video.thumbnailUrl}
+                          alt={video.title}
+                          className="w-full h-36 object-cover"
+                        />
+                      </div>
+                      <div className="p-2 space-y-1">
+                        <h3 className="text-sm font-semibold truncate">
+                          {video.title}
+                        </h3>
+                        <p className="text-xs text-gray-500">
+                          {video.views} views •{" "}
+                          {formatTimeAgo(video.uploadDate)}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
           </>
         ) : (
           <div className="text-sm text-center w-1/2 mx-auto mt-12">
             <IfNotContent />
             {isModalOpen && (
               <VideoUploadModal
-                isOpen={isModalOpen}
                 onClose={handleVideoUploadModal}
+                channelId={channel._id}
               />
             )}
             <button

@@ -3,15 +3,21 @@ import { IconButton, TextField, Avatar } from "@mui/material";
 import { Close, VideoLibrary, Image } from "@mui/icons-material";
 import { sanitizeString } from "../../utils/helpers";
 import { useFormValidation } from "../../validations/useFormValidation";
+import { createVideo } from "../../services/videoServices";
 import {
   videoSchema,
   thumbnailSchema,
 } from "../../validations/videoDetailsSchema";
-const VideoUploadForm = ({ isOpen, onClose, videoFile }) => {
+import ButtonLoader from "../ButtonLoader";
+import { useNavigate } from "react-router";
+
+const VideoUploadForm = ({ isOpen, onClose, videoFile, channelId }) => {
   const [thumbnailUrl, setThumbnailUrl] = useState(null);
   const { register, handleSubmit, errors } = useFormValidation(videoSchema);
   const [error, setError] = useState(null);
   const videoFileRef = useRef(videoFile);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const videoUrl = useMemo(() => {
     return URL.createObjectURL(videoFileRef.current);
@@ -27,10 +33,30 @@ const VideoUploadForm = ({ isOpen, onClose, videoFile }) => {
     }
   };
 
-  const onSubmit = (videoData) => {
-    if (thumbnailUrl && !error) {
-      const newData = { ...videoData, thumbnailUrl };
-      console.log(newData);
+  const onSubmit = async (videoData) => {
+    try {
+      setLoading(true);
+      if (!thumbnailUrl) {
+        throw new Error("Thumbnail is required");
+      }
+      if (!videoFile) {
+        throw new Error("Video file is required");
+      }
+      const combinedData = {
+        ...videoData,
+        thumbnailUrl,
+        videoUrl: videoFile,
+        channelId,
+      };
+      await createVideo(combinedData);
+      setError(null);
+      setLoading(false);
+      onClose();
+    } catch (err) {
+      console.error("Error uploading video:", err);
+      setError(err.message || "An error occurred during video upload");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -165,7 +191,11 @@ const VideoUploadForm = ({ isOpen, onClose, videoFile }) => {
             type="submit"
             className="bg-black hover:bg-gray-900 text-white py-2 px-6 rounded-full"
           >
-            Save and Upload
+            {loading ? (
+              <ButtonLoader text={"Uploading Video..."} />
+            ) : (
+              "Save and Upload"
+            )}
           </button>
         </div>
       </form>

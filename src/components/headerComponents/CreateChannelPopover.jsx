@@ -13,7 +13,7 @@ const CreateChannelPopover = ({ open, onClose }) => {
     if (channelData) {
       await createChannel(channelData);
       onClose();
-      navigate(`/${channelData.handle}`);
+      navigate(`/channel/${channelData.handle}`);
     }
   };
 

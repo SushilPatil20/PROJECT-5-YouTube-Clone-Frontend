@@ -45,7 +45,7 @@ const appRouter = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "/:channelHandle",
+        path: "/channel/:channelHandle",
         element: <ChannelPage />,
       },
       {
@@ -65,7 +65,7 @@ const appRouter = createBrowserRouter([
         ),
       },
       {
-        path: "/video-edit-page/:videoId",
+        path: "/video/:videoId/editing",
         element: (
           <AuthGuard>
             <EditVideoData />

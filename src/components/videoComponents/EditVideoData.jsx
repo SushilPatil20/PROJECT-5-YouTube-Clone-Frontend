@@ -13,8 +13,10 @@ import {
 
 const EditVideoData = () => {
   const { videoId } = useParams();
+
   const video = carts.find((video) => video.id === Number(videoId));
   const { register, handleSubmit, errors } = useFormValidation(videoSchema);
+  console.log(videoId);
 
   const [videoData, setVideoData] = useState({
     title: video?.title || null,

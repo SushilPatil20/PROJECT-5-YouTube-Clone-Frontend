@@ -12,6 +12,7 @@ import { carts, comments, formatLikesCount } from "../../utils/helpers";
 import { useNavigate, useParams } from "react-router";
 import { useFormValidation } from "../../validations/useFormValidation";
 import commentSchema from "../../validations/commentSchema";
+import { getSingleVideo } from "../../services/videoServices";
 
 const WatchPage = () => {
   const { videoId } = useParams();
@@ -37,23 +38,27 @@ const WatchPage = () => {
   };
 
   useEffect(() => {
-    const video = carts.find((video) => video.id == videoId);
-    setCurrentVideo(video);
+    const fetchVideo = async (videoId) => {
+      const video = await getSingleVideo(videoId);
+      setCurrentVideo(video.video);
+    };
+    fetchVideo(videoId);
   }, [videoId]);
+
   return (
     <div className="flex flex-col lg:flex-row w-full h-full px-0 sm:px-3 md:px-8 md:pt-6">
       <div className="lg:w-[68%] w-full px-2 md:px-4">
-        <div className="w-full md:h-[470px] mb-2 mt-6 relative md:mt-0">
+        <div className="w-full h-[290px] sm:h-[390px] md:h-[490px] mb-2 mt-6 relative md:mt-0">
+          {console.log(currentVideo)}
           {currentVideo && (
             <video
-              className="w-full outline-none h-full object-cover rounded-md md:rounded-xl"
-              src={currentVideo.url}
+              className="w-full outline-none object-cover rounded-md md:rounded-xl h-full"
+              src={currentVideo.videoUrl}
               controls
               autoPlay={true}
             />
           )}
         </div>
-
         <div className="flex items-center justify-between flex-wrap">
           <h2 className="line-clamp-1 text-xl font-semibold mb-3 w-full">
             {currentVideo.title}
@@ -108,7 +113,9 @@ const WatchPage = () => {
 
         <div className="mt-10">
           <h3 className="text-xl font-bold mb-6">
-            {formatLikesCount(comments.length)} Comments
+            {currentVideo.comments &&
+              formatLikesCount(currentVideo.comments.length)}{" "}
+            Comments
           </h3>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex items-center pr-2 ">

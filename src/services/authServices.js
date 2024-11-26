@@ -12,12 +12,14 @@ export const registerUser = async (userData) => {
 
 // ----------------------------------- Login an existing user -----------------------------------
 export const loginUser = async (credentials) => {
+    let saveError = ""
     try {
         const response = await api.post('/user/login', credentials, { headers: { 'Content-Type': 'application/json' } });
         return response.data
     } catch (error) {
-        return error.response?.data?.error || "Server side issue : login failed. please check your internet connection."
+        saveError = error.response.data.error || "Server side issue : login failed. please check your internet connection."
     }
+    return saveError || ''
 };
 
 

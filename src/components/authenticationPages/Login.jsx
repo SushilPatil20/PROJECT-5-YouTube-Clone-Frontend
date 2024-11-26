@@ -24,17 +24,19 @@ const Login = () => {
       setLoading(true);
       setServerError(null);
 
-      const { token, userId, serverError } = await loginUser(credentials);
-      if (serverError) {
-        return setServerError(serverError);
+      const result = await loginUser(credentials);
+      if (!result.token && !result.userId) {
+        return setServerError(result);
       }
-      dispatch(loginSuccess({ token, userId }));
-      toast.success("Login successful!", {
-        position: "top-right",
-        autoClose: 2000,
-      });
-
-      navigate("/");
+      const { token, userId } = result;
+      if (token && userId) {
+        dispatch(loginSuccess({ token, userId }));
+        toast.success("Login successful!", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+        navigate("/");
+      }
     } catch (error) {
       setLoading(false);
       setServerError(error.message);

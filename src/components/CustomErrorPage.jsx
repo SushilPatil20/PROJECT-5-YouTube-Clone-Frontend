@@ -38,13 +38,6 @@ const CustomErrorPage = () => {
         >
           Go Home
         </Button>
-        <Button
-          variant="outlined"
-          onClick={() => navigate(-1)}
-          className="text-red-500 border-red-500 hover:bg-red-100"
-        >
-          Go Back
-        </Button>
       </div>
     </div>
   );

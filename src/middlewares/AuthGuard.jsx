@@ -11,8 +11,6 @@ const AuthGuard = ({ children }) => {
 
   const isTokenValid = tokenValidator(token);
 
-  console.log(isTokenValid);
-
   if (!isTokenValid) {
     removeLocal("authToken");
     removeLocal("userId");

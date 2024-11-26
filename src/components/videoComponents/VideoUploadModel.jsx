@@ -4,7 +4,7 @@ import { Close } from "@mui/icons-material";
 import UploadIcon from "@mui/icons-material/Upload";
 import VideoUploadForm from "./VideoUploadForm";
 import { videoUploadSchema } from "../../validations/videoDetailsSchema";
-const VideoUploadModal = ({ onClose }) => {
+const VideoUploadModal = ({ onClose, channelId }) => {
   const [isUploaded, setIsUploaded] = useState(false);
   const [selectedVideoFile, setSelectedVideoFile] = useState(null);
   const [openForm, setIsOpenForm] = useState(false);
@@ -138,6 +138,7 @@ const VideoUploadModal = ({ onClose }) => {
       isOpen={openForm}
       onClose={handleVideoUploadeForm}
       videoFile={selectedVideoFile}
+      channelId={channelId}
     />
   );
 };
