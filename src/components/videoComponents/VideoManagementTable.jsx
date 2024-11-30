@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Edit, Delete } from "@mui/icons-material";
 import PaginationControls from "./PaginationControls";
 import { Tooltip } from "@mui/material";
-import { formatToDDMMYYYY } from "../../utils/helpers";
+import { formatCount, formatToDDMMYYYY } from "../../utils/helpers";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleModal } from "../../redux/slice/modalSlice";
 import VideoUploadModal from "./VideoUploadModel";
-import { replace, useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Back from "../Back";
 import IfNotContent from "../IfNotContent";
 import { deleteVideo, getAuthUserVideos } from "../../services/videoServices";
 import useAuth from "../../customeHooks/useAuth";
 
 const VideoManagementTable = () => {
+  const { handle } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -21,24 +22,30 @@ const VideoManagementTable = () => {
   const [videos, setVideos] = useState([]);
   const { userId } = useAuth();
 
-  const handleDeleteClick = async (videoId) => {
-    if (videoId) {
-      const result = await deleteVideo(videoId);
-      if (result && result.status === 200) {
-        navigate("/video-management-dashboard", replace);
-      }
+  const fetchAuthUserVideos = async (userId) => {
+    const result = await getAuthUserVideos(userId);
+    if (result.videos) {
+      setVideos(result.videos);
     }
   };
 
   useEffect(() => {
-    const fetchAuthUserVideos = async (userId) => {
-      const result = await getAuthUserVideos(userId);
-      if (result.videos) {
-        setVideos(result.videos);
-      }
-    };
     fetchAuthUserVideos(userId);
-  }, [userId, handleDeleteClick]);
+  }, [userId, isModalOpen]);
+
+  // Memoize handleDeleteClick to avoid unnecessary re-creations
+  const handleDeleteClick = useCallback(
+    async (videoId) => {
+      if (videoId) {
+        const result = await deleteVideo(videoId);
+        fetchAuthUserVideos(userId);
+        if (result && (await result.status) === 200) {
+          navigate(`/channel/${handle}/video-management-dashboard`);
+        }
+      }
+    },
+    [userId]
+  );
 
   const videosPerPage = 5;
   const totalPages = Math.ceil(videos.length / videosPerPage);
@@ -50,7 +57,7 @@ const VideoManagementTable = () => {
   return (
     <div className="max-w-7xl">
       <div className="flex justify-between items-center">
-        <Back />
+        <Back className="-ml-1 mb-4" pathName={`/channel/${handle}`} />
         {videos.length > 0 && (
           <div>
             <button
@@ -112,14 +119,18 @@ const VideoManagementTable = () => {
                     {video.comments.length}
                   </td>
                   <td className="p-2 md:p-3 text-center border-b min-w-32">
-                    {formatLikesCount(video.likes)}
+                    {formatCount(video.likes)}
                   </td>
                   <td className="p-2 md:p-3 text-center border-b min-w-32">
-                    {formatLikesCount(video.dislikes)}
+                    {formatCount(video.dislikes)}
                   </td>
                   <td className="p-2 md:p-3 space-x-2 text-center border-b z-10 min-w-32">
                     <Tooltip
-                      onClick={() => navigate(`/video/${video._id}/editing`)}
+                      onClick={() =>
+                        navigate(
+                          `/channel/${video.channelId?.handle}/video/${video._id}/editing`
+                        )
+                      }
                       title="Edit"
                       placement="top"
                       className="hover:bg-gray-200  rounded-full p-2"
@@ -171,6 +182,7 @@ const VideoManagementTable = () => {
         <VideoUploadModal
           isOpen={isModalOpen}
           onClose={handleVideoUploadModal}
+          channelId={currentVideos[0].channelId._id}
         />
       )}
     </div>

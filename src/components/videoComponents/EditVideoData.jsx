@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { useParams } from "react-router";
-import { TextField, Avatar, Button } from "@mui/material";
+import React, { useEffect, useMemo, useState } from "react";
+import { replace, useNavigate, useParams } from "react-router";
+import { TextField, Avatar } from "@mui/material";
 import { VideoLibrary, Image, Movie } from "@mui/icons-material";
-import { carts } from "../../utils/helpers";
 import Back from "../Back";
 import { useFormValidation } from "../../validations/useFormValidation";
 import {
@@ -10,30 +9,54 @@ import {
   thumbnailSchema,
   videoUploadSchema,
 } from "../../validations/videoDetailsSchema";
+import { getSingleVideo, updateVideo } from "../../services/videoServices";
 
 const EditVideoData = () => {
-  const { videoId } = useParams();
-
-  const video = carts.find((video) => video.id === Number(videoId));
+  const { videoId, handle } = useParams();
+  const [video, setVideo] = useState({});
   const { register, handleSubmit, errors } = useFormValidation(videoSchema);
-  console.log(videoId);
+  const navigate = useNavigate();
 
   const [videoData, setVideoData] = useState({
-    title: video?.title || null,
-    description: video?.description || null,
-    thumbnailUrl: video?.thumbnail || null,
-    videoFile: video?.url || null,
-    newThumbnailUrl: null,
-    newVideoFile: null,
-    thumbnailError: null,
-    videoError: null,
+    title: video.title || "",
+    description: video.description || "",
+    thumbnailUrl: video.thumbnailUrl || "",
+    videoUrl: video.url || "",
+    newThumbnailUrl: "",
+    newVideoUrl: "",
+    thumbnailError: "",
+    videoError: "",
   });
+
+  useEffect(() => {
+    const fetchVideoToUpdate = async (videoId) => {
+      try {
+        const video = await getSingleVideo(videoId);
+        if (video.video) {
+          setVideo(video.video);
+          setVideoData({
+            title: video.video.title,
+            description: video.video.description,
+            thumbnailUrl: video.video.thumbnailUrl,
+            videoUrl: video.video.videoUrl,
+          });
+        }
+      } catch (error) {
+        console.log("Error fetching data :", error.message);
+      }
+    };
+    fetchVideoToUpdate(videoId);
+  }, [videoId]);
+
+  const videoUrl = useMemo(() => {
+    if (!videoData.newVideoUrl) return null;
+    return URL.createObjectURL(videoData?.newVideoUrl);
+  }, [videoData?.newVideoUrl]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setVideoData({ ...videoData, [name]: value });
   };
-
   const validateThumbnail = async (thumbnail) => {
     try {
       const thumbnailFile = await thumbnailSchema.validate({ thumbnail });
@@ -55,7 +78,7 @@ const EditVideoData = () => {
       const validVideo = await videoUploadSchema.validate({ file });
       setVideoData((prevData) => ({
         ...prevData,
-        newVideoFile: validVideo.file,
+        newVideoUrl: validVideo.file,
         videoError: null,
       }));
     } catch (error) {
@@ -66,14 +89,30 @@ const EditVideoData = () => {
     }
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const { videoError, thumbnailError } = videoData;
     if (!videoError && !thumbnailError) {
       const mergedData = {
         ...data,
         ...videoData,
       };
-      console.log("Merged Data:", mergedData);
+      const dataToUpdate = {
+        thumbnailUrl: mergedData.newThumbnailUrl,
+        videoUrl: mergedData.newVideoUrl,
+        title: mergedData.title,
+        description: mergedData.description,
+      };
+      try {
+        // call the update function
+        const result = await updateVideo(dataToUpdate, videoId);
+        if (result.status && result.status == false) {
+          return console.log(result.serverError);
+        }
+        navigate(`/channel/${handle}/video-management-dashboard`);
+      } catch (error) {
+        console.log(error.message);
+        setServerError(error.message);
+      }
     } else {
       console.log("Solve errors first");
     }
@@ -85,7 +124,11 @@ const EditVideoData = () => {
         className="w-full bg-white shadow-lg rounded-lg p-4"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Back className="-ml-1 mb-4" />
+        <Back
+          className="-ml-1 mb-4"
+          pathName={`/channel/${handle}/video-management-dashboard`}
+        />
+
         <div className="flex items-center space-x-2 mb-6">
           <Avatar sx={{ bgcolor: "red" }}>
             <VideoLibrary />
@@ -94,7 +137,6 @@ const EditVideoData = () => {
             Edit Video and the Video Details
           </h2>
         </div>
-
         <section className="flex flex-col md:flex-row space-x-6">
           <div className="md:w-1/2 space-y-6 z-0">
             <div>
@@ -112,7 +154,6 @@ const EditVideoData = () => {
                 </p>
               )}
             </div>
-
             <div>
               <TextField
                 label="Description"
@@ -131,7 +172,7 @@ const EditVideoData = () => {
               )}
             </div>
           </div>
-
+          {/* {serverError && serverError} */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-6 md:mt-0">
             <div>
               <label
@@ -195,11 +236,11 @@ const EditVideoData = () => {
                 className="hidden"
               />
               <div className="flex justify-between items-center space-x-4">
-                {video.url && (
+                {video.videoUrl && (
                   <div className="flex flex-col items-center">
                     <video
                       controls
-                      src={video.url}
+                      src={video.videoUrl}
                       className="w-40 h-20 object-cover rounded-lg"
                     />
                     <span className="text-gray-500 text-sm">
@@ -207,11 +248,11 @@ const EditVideoData = () => {
                     </span>
                   </div>
                 )}
-                {videoData.newVideoFile && (
+                {videoData.newVideoUrl && (
                   <div className="flex flex-col items-center">
                     <video
                       controls
-                      src={URL.createObjectURL(videoData.newVideoFile)}
+                      src={videoUrl}
                       className="w-40 h-20 object-cover rounded-lg"
                     />
                     <span className="text-gray-500 text-sm">New Video</span>

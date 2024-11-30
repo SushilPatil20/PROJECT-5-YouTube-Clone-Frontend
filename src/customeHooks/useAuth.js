@@ -9,7 +9,6 @@ const useAuth = () => {
     const token = useSelector((state) => state.auth.token);
     const userId = useSelector((state) => state.auth.userId);
     const user = useSelector((state) => state.user)
-
     useEffect(() => {
         const fetchUserData = async () => {
             try {

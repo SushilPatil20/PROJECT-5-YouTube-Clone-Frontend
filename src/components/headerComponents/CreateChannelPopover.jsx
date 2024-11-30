@@ -9,6 +9,7 @@ const CreateChannelPopover = ({ open, onClose }) => {
   if (!open) return null;
   const navigate = useNavigate();
   const { register, handleSubmit, errors } = useFormValidation(channelSchema);
+
   const onSubmit = async (channelData) => {
     if (channelData) {
       await createChannel(channelData);
@@ -38,7 +39,7 @@ const CreateChannelPopover = ({ open, onClose }) => {
             width={"128px"}
             className="rounded-full block"
             src="https://yt3.ggpht.com/a/default-user=s200-c-k-c0x00ffffff-no-rj"
-            alt=""
+            alt="profile"
           />
         </div>
 

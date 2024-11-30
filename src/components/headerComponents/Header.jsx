@@ -3,7 +3,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import YouTubeLogo from "./YouTubeLogo";
 import { Mic } from "@mui/icons-material";
 import Person from "@mui/icons-material/Person";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { ArrowBack } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
@@ -13,12 +13,15 @@ import useAuth from "../../customeHooks/useAuth";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/slice/authSlice";
 import { useUrlPathName } from "../../customeHooks/useUrlPathName";
+import searchStringSchema from "../../validations/searchSchema";
 
 const Header = ({ toggleSidebar }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 660);
   const [isSearchClick, setIsSearchClick] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [search, setSearch] = useState("");
   const handleClick = (event) => setAnchorEl(event.currentTarget);
+  const navigate = useNavigate();
   const handleClose = () => setAnchorEl(null);
   const open = Boolean(anchorEl);
   const { isAuthenticated } = useAuth();
@@ -34,6 +37,27 @@ const Header = ({ toggleSidebar }) => {
   const handleLogout = () => {
     dispatch(logout());
     handleClose();
+  };
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setSearch(value);
+  };
+
+  const searchQuery = async () => {
+    try {
+      await searchStringSchema.validate({ search });
+      // Encode the search query and replace spaces with '+'
+      const formattedQuery = encodeURIComponent(search).replace(/%20/g, "+");
+      navigate(`/results?search_query=${formattedQuery}`);
+    } catch (error) {
+      if (error.name === "ValidationError") {
+        console.error("Validation Error:", error.message);
+        alert(error.message); // Or display this in the UI
+      } else {
+        console.error("Unexpected Error:", error);
+      }
+    }
   };
 
   return compontShouldShowOnSignUpAndSignIn(currenUrl) ? (
@@ -52,9 +76,14 @@ const Header = ({ toggleSidebar }) => {
               type="text"
               placeholder="Search"
               className="block w-full h-full border border-gray-400 outline-none focus:border focus:shadow-inner focus:shadow-gray-200 focus:border-blue-700 rounded-tl-3xl rounded-bl-3xl px-4 py-4"
+              value={search}
+              onChange={handleChange}
               autoFocus
             />
-            <div className="h-full cursor-pointer px-4 bg-gray-100 text-gray-600 flex items-center hover:bg-gray-200 justify-center rounded-tr-3xl rounded-br-3xl border-t border-b border-r border-gray-400 w-14">
+            <div
+              onClick={searchQuery}
+              className="h-full cursor-pointer px-4 bg-gray-100 text-gray-600 flex items-center hover:bg-gray-200 justify-center rounded-tr-3xl rounded-br-3xl border-t border-b border-r border-gray-400 w-14"
+            >
               <SearchIcon fontSize="medium" />
             </div>
           </div>
@@ -80,8 +109,13 @@ const Header = ({ toggleSidebar }) => {
                   type="text"
                   placeholder="Search"
                   className="block w-full h-full border border-gray-400 outline-none focus:border focus:shadow-inner focus:shadow-gray-200 focus:border-blue-700 rounded-tl-3xl rounded-bl-3xl px-4 py-4"
+                  value={search}
+                  onChange={handleChange}
                 />
-                <div className="cursor-pointer h-full px-4 text-gray-600 flex items-center hover:bg-gray-100 justify-center rounded-tr-3xl rounded-br-3xl border-t border-b border-r border-gray-400 w-14">
+                <div
+                  onClick={searchQuery}
+                  className="cursor-pointer h-full px-4 text-gray-600 flex items-center hover:bg-gray-100 justify-center rounded-tr-3xl rounded-br-3xl border-t border-b border-r border-gray-400 w-14"
+                >
                   <SearchIcon fontSize="medium" />
                 </div>
               </div>

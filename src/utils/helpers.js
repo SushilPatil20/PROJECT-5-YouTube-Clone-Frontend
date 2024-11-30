@@ -3,8 +3,6 @@ import { jwtDecode } from "jwt-decode"; // Install with: npm install jwt-decode
 import { formatDistanceToNow, parseISO } from 'date-fns';
 
 
-
-
 export const carts = [
     {
         id: 10100001,

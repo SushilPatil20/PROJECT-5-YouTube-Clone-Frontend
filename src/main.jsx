@@ -18,6 +18,7 @@ const WatchPage = lazy(() =>
   import("./components/videoListongComponent/Watch.jsx")
 );
 import AuthGuard from "./middlewares/AuthGuard.jsx";
+import SearchResults from "./components/videoListongComponent/SearchResults.jsx";
 
 const appRouter = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/",
         element: <VideoListing />,
+      },
+      {
+        path: "/results",
+        element: <SearchResults />,
       },
       {
         path: "/watch/:videoId",
@@ -49,7 +54,7 @@ const appRouter = createBrowserRouter([
         element: <ChannelPage />,
       },
       {
-        path: "channel/:channelId/editing/",
+        path: "/channel/:channelId/editing/",
         element: (
           <AuthGuard>
             <ChannelManagement />
@@ -57,7 +62,7 @@ const appRouter = createBrowserRouter([
         ),
       },
       {
-        path: "/video-management-dashboard",
+        path: "/channel/:handle/video-management-dashboard",
         element: (
           <AuthGuard>
             <VideoManagementDashboard />
@@ -65,7 +70,7 @@ const appRouter = createBrowserRouter([
         ),
       },
       {
-        path: "/video/:videoId/editing",
+        path: "/channel/:handle/video/:videoId/editing",
         element: (
           <AuthGuard>
             <EditVideoData />

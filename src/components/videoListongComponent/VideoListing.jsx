@@ -27,7 +27,6 @@ const VideoListing = () => {
   return (
     <div className="px-4 md:px-6 relative">
       <CategoriesListing />
-      {console.log(videos)}
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 py-2 gap-4">
         {videos.map((video) => (
           <div
@@ -38,10 +37,10 @@ const VideoListing = () => {
             <div className="min-h-72 cursor-pointer md:w-full md:mb-4">
               <div>
                 {loading ? (
-                  <div className="skeleton h-44 w-full rounded-lg bg-gray-300"></div>
+                  <div className="skeleton h-52 w-full rounded-lg bg-gray-300"></div>
                 ) : (
                   <img
-                    className="rounded-lg h-44 object-cover w-full"
+                    className="rounded-lg h-52 object-cover w-full"
                     src={video.thumbnailUrl}
                     alt={video.title}
                     loading="lazy"

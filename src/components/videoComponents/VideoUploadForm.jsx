@@ -9,7 +9,6 @@ import {
   thumbnailSchema,
 } from "../../validations/videoDetailsSchema";
 import ButtonLoader from "../ButtonLoader";
-import { useNavigate } from "react-router";
 
 const VideoUploadForm = ({ isOpen, onClose, videoFile, channelId }) => {
   const [thumbnailUrl, setThumbnailUrl] = useState(null);
@@ -17,7 +16,6 @@ const VideoUploadForm = ({ isOpen, onClose, videoFile, channelId }) => {
   const [error, setError] = useState(null);
   const videoFileRef = useRef(videoFile);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const videoUrl = useMemo(() => {
     return URL.createObjectURL(videoFileRef.current);

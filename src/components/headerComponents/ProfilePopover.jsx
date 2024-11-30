@@ -17,7 +17,8 @@ const ProfilePopover = ({ handleClose, anchorEl, open, onLogout }) => {
   };
 
   const handleNavigation = () => {
-    navigation(`/channel/${user.user.channels[1].handle}`);
+    // console.log(user.user.channels[0]);
+    navigation(`/channel/${user.user.channels[0].handle}`);
     handleClose();
   };
 
@@ -85,7 +86,6 @@ const ProfilePopover = ({ handleClose, anchorEl, open, onLogout }) => {
               className="px-5 py-2 hover:bg-gray-100 space-x-4 cursor-pointer"
               onClick={handleCreateChannelButton}
             >
-              {/* <Logout className="text-gray-600" /> */}
               <AddCircle className="text-gray-600" />
               <span className="text-sm ">Create a channel</span>
             </div>

@@ -17,6 +17,9 @@ const ChannelPage = () => {
   const [channel, setChannel] = useState({});
   const [videos, setVideos] = useState([]);
   const { channelHandle } = useParams();
+  const { user } = useAuth();
+  const isOwner =
+    user?.user?.channels?.[0] && user?.user?.channels?.[0]._id === channel._id;
 
   useEffect(() => {
     const fetchChannel = async (channelHandle) => {
@@ -33,13 +36,15 @@ const ChannelPage = () => {
 
   return (
     <div className="w-full pb-14 max-w-7xl font-roboto ml-auto">
-      <div className="h-44 w-full md:px-8">
-        <img
-          className="w-full h-full object-cover rounded-2xl"
-          src={channel.channelBanner && channel.channelBanner}
-          alt={channel.channelName + "-image"}
-        />
-      </div>
+      {channel.channelBanner && (
+        <div className="h-44 w-full md:px-8">
+          <img
+            className="w-full h-full object-cover rounded-2xl"
+            src={channel.channelBanner && channel.channelBanner}
+            alt={channel.channelName + "-image"}
+          />
+        </div>
+      )}
       <div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-4 md:px-8 pt-5">
         <img
           src={channel.owner && channel.owner.avatar}
@@ -59,7 +64,8 @@ const ChannelPage = () => {
               <span className="text-black font-roboto">...more</span>
             </p>
           </div>
-          {isAuthenticated && (
+
+          {isAuthenticated && isOwner && (
             <div className="flex gap-2 mt-3">
               <button
                 onClick={() => navigate(`/channel/${channel._id}/editing`)}
@@ -67,12 +73,18 @@ const ChannelPage = () => {
               >
                 Customise Channel
               </button>
-              <button
-                onClick={() => navigate("/video-management-dashboard")}
-                className="text-sm bg-gray-100 font-semibold text-gray-800 rounded-3xl px-4 py-2 hover:bg-gray-200"
-              >
-                Manage Videos
-              </button>
+              {videos && videos.length > 0 && (
+                <button
+                  onClick={() =>
+                    navigate(
+                      `/channel/${channel.handle}/video-management-dashboard`
+                    )
+                  }
+                  className="text-sm bg-gray-100 font-semibold text-gray-800 rounded-3xl px-4 py-2 hover:bg-gray-200"
+                >
+                  Manage Videos
+                </button>
+              )}
             </div>
           )}
         </div>
@@ -89,12 +101,13 @@ const ChannelPage = () => {
               </li>
             </ul>
             <div className="px-9">
-              <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {videos &&
                   videos.map((video) => (
                     <div
                       key={video._id}
                       className="group relative bg-white rounded-md shadow hover:shadow-lg overflow-hidden"
+                      onClick={() => navigate(`/watch/${video._id}`)}
                     >
                       <div className="relative">
                         <img
@@ -118,21 +131,23 @@ const ChannelPage = () => {
             </div>
           </>
         ) : (
-          <div className="text-sm text-center w-1/2 mx-auto mt-12">
-            <IfNotContent />
-            {isModalOpen && (
-              <VideoUploadModal
-                onClose={handleVideoUploadModal}
-                channelId={channel._id}
-              />
-            )}
-            <button
-              onClick={handleVideoUploadModal}
-              className="cursor-pointer mt-6 text-sm hover:bg-gray-800 bg-black text-white px-4 py-2 rounded-3xl"
-            >
-              Create
-            </button>
-          </div>
+          isOwner && (
+            <div className="text-sm text-center w-1/2 mx-auto mt-12">
+              <IfNotContent />
+              {isModalOpen && (
+                <VideoUploadModal
+                  onClose={handleVideoUploadModal}
+                  channelId={channel._id}
+                />
+              )}
+              <button
+                onClick={handleVideoUploadModal}
+                className="cursor-pointer mt-6 text-sm hover:bg-gray-800 bg-black text-white px-4 py-2 rounded-3xl"
+              >
+                Create
+              </button>
+            </div>
+          )
         )}
       </section>
     </div>

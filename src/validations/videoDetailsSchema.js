@@ -6,6 +6,7 @@ export const videoSchema = Yup.object().shape({
         .min(3, 'Title must be at least 3 characters long'),
     description: Yup.string()
         .required('Description is required')
+        .max(1000, "Description is to large")
         .min(10, 'Description must be at least 10 characters long')
 });
 
@@ -22,6 +23,7 @@ export const thumbnailSchema = Yup.object().shape({
             })
 })
 
+
 export const videoUploadSchema = Yup.object({
     file: Yup
         .mixed()
@@ -31,7 +33,7 @@ export const videoUploadSchema = Yup.object({
             return value && ["video/mp4", "video/avi", "video/mov"].includes(value.type);
         })
         .test("fileSize", "File size is too large.", (value) => {
-            // Ensure file size does not exceed 20MB (example)
-            return value && value.size <= 20 * 1024 * 1024;
+            // Ensure file size does not exceed 10MB (example)
+            return value && value.size <= 10 * 1024 * 1024;
         }),
 });

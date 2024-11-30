@@ -21,12 +21,11 @@ const ChannelManagement = () => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
-  // Fetch channel data by ID
   useEffect(() => {
-    const fetchChannelById = async (id) => {
+    const fetchChannelById = async (chanId) => {
       setLoading(true);
       try {
-        const channel = await getChannel(id);
+        const channel = await getChannel(chanId);
         if (channel) {
           setExistingChannel(channel.channel);
           setChannelData({
@@ -109,7 +108,10 @@ const ChannelManagement = () => {
           onSubmit={handleSubmit}
           className="max-w-3xl border border-gray-300 mx-auto p-4 pt-3 bg-white shadow-lg rounded-lg"
         >
-          <Back className="mb-3" />
+          <Back
+            className="mb-3"
+            pathName={`/channel/${existingChannel.handle}`}
+          />
           <div className="md:flex md:gap-4">
             {/* Banner Upload */}
             <div className="relative flex justify-center items-center mb-6 md:w-1/2">
