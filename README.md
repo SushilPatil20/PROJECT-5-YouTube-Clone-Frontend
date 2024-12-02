@@ -79,83 +79,83 @@ A fully responsive YouTube clone application built with the MERN stack. This fro
 
 To get started with this project on your local machine, follow these steps:
 
-1. Clone this repository:
+## 1. Clone this repository:
 
    ```bash
    git clone https://github.com/yourusername/youtube-clone-frontend.git
    ```
 
-2. Navigate to the project directory:
+## 2. Navigate to the project directory:
 
 cd youtube-clone-frontend
 
-3. Install the necessary dependencies:
+## 3. Install the necessary dependencies:
 
 npm install
 
-4. Run the development server:
+## 4. Run the development server:
 
-npm run dev
+    npm run dev
 
 The app will be available at http://localhost:5173.
 
-Project Structure
+## Project Structure
 
-src/
-├── assets/ # Static assets like images, fonts, etc.
-├── components/ # Reusable components (Header, Sidebar, etc.)
-├── hooks/ # Custom hooks (e.g., authentication, video management, etc.)
-├── pages/ # Page components (Home, Watch, Profile, etc.)
-├── redux/ # Redux store setup, actions, reducers, and state management
-├── services/ # API service functions for interacting with the backend
-├── styles/ # Global styles (TailwindCSS setup, theme, etc.)
-├── utils/ # Utility functions (helpers, constants, common logic)
-└── validations/ # Form and input validation functions and schemas
+**src/**
+- assets/ Static assets like images, fonts, etc.
+- components/ Reusable components (Header, Sidebar, etc.)
+- hooks/ Custom hooks (e.g., authentication, video management, etc.)
+- pages/ Page components (Home, Watch, Profile, etc.)
+- redux/ Redux store setup, actions, reducers, and state management
+- services/ API service functions for interacting with the backend
+- styles/ Global styles (TailwindCSS setup, theme, etc.)
+- utils/ Utility functions (helpers, constants, common logic)
+- validations/ Form and input validation functions and schemas
 
-Key Components
+## Key Components
 
-Authentication
-Login: Allows users to log in with email and password.
-Signup: Users can create a new account.
+## Authentication
+- **Login**: Allows users to log in with email and password.
+- **Signup**: Users can create a new account.
 Protected Routes: Certain routes like video management and channel creation are protected and accessible only to authenticated users.
 
-Video
-VideoList: Displays a list of videos with basic information like title, description, and thumbnail.
-VideoPlayer: A custom video player that provides basic controls (play, pause, volume, etc.).
-VideoUploadModal: Modal for uploading videos with fields for metadata like title, description, tags, and thumbnail.
-EditVideoData: A page to edit video details.
+## Video
+- **VideoList**: Displays a list of videos with basic information like title, description, and thumbnail.
+- **VideoPlayer**: A custom video player that provides basic controls (play, pause, volume, etc.).
+- **VideoUploadModal**: Modal for uploading videos with fields for metadata like title, description, tags, and thumbnail.
+- **EditVideoData**: A page to edit video details.
 
-Search & Filter
-SearchBar: Allows users to search for videos by title or tags.
-FilterSidebar: Provides options to filter videos by categories like Music, Sports, etc.
+## Search & Filter
+- **SearchBar**: Allows users to search for videos by title or tags.
+- **FilterSidebar**: Provides options to filter videos by categories like Music, Sports, etc.
 
-Channel
-CreateChannelPopover: Popover for creating a new channel.
-ChannelManagement: Users can view and manage their uploaded videos and other channel details.
+## Channel
+- **CreateChannelPopover**: Popover for creating a new channel.
+- **ChannelManagement**: Users can view and manage their uploaded videos and other channel details.
 
-Comment Management
-CommentSection: Allows users to view, create, update, and delete comments on videos.
-CommentForm: Provides a form to submit new comments.
-EditComment: Authorized users can edit their existing comments.
-DeleteComment: Authorized users can delete their comments.
+## Comment Management
+- **CommentSection**: Allows users to view, create, update, and delete comments on videos.
+- **CommentForm**: Provides a form to submit new comments.
+- **EditComment**: Authorized users can edit their existing comments.
+- **DeleteComment**: Authorized users can delete their comments.
 
-Usage
-Sign Up: Create a new account by providing your name, email, and password.
-Login: After signing up, log in with your credentials.
-Search for Videos: Use the search bar to find videos by title.
-Upload Videos: Upload videos to your channel with metadata.
-Manage Channel: Edit your channel details and manage your videos.
-Comment: Interact with videos by commenting.
-Create, Update, or Delete Comments: Users can create new comments, edit their own, or delete them.
-Responsive Design: View the app on different devices for an optimized experience.
+## Usage
+- **Sign Up**: Create a new account by providing your name, email, and password.
+- **Login**: After signing up, log in with your credentials.
+- **Search for Videos**: Use the search bar to find videos by title.
+- **Upload Videos**: Upload videos to your channel with metadata.
+- **Manage Channel**: Edit your channel details and manage your videos.
+- **Comment**: Interact with videos by commenting.
+- **Create, Update, or Delete Comments**: Users can create new comments, edit their own, or delete them.
+- **Responsive Design**: View the app on different devices for an optimized experience.
 
-Contributing
+## Contributing
 If you would like to contribute to this project, feel free to fork the repository, create a new branch, and submit a pull request. Please make sure your changes are well-tested and that they don't break existing functionality.
 
-Acknowledgements
-React.js
-Tailwind CSS
-Material UI
-Redux
-Axios
-React Router
+## Acknowledgements
+- React.js
+- Tailwind CSS
+- Material UI
+- Redux
+- Axios
+- React Router
