@@ -102,15 +102,15 @@ The app will be available at http://localhost:5173.
 ## Project Structure
 
 src/
-├── assets/ # Static assets like images, fonts, etc.
-├── components/ # Reusable components (Header, Sidebar, etc.)
-├── hooks/ # Custom hooks (e.g., authentication, video management, etc.)
-├── pages/ # Page components (Home, Watch, Profile, etc.)
-├── redux/ # Redux store setup, actions, reducers, and state management
-├── services/ # API service functions for interacting with the backend
-├── styles/ # Global styles (TailwindCSS setup, theme, etc.)
-├── utils/ # Utility functions (helpers, constants, common logic)
-└── validations/ # Form and input validation functions and schemas
+- assets/ # Static assets like images, fonts, etc.
+- components/ # Reusable components (Header, Sidebar, etc.)
+- hooks/ # Custom hooks (e.g., authentication, video management, etc.)
+- pages/ # Page components (Home, Watch, Profile, etc.)
+- redux/ # Redux store setup, actions, reducers, and state management
+- services/ # API service functions for interacting with the backend
+- styles/ # Global styles (TailwindCSS setup, theme, etc.)
+- utils/ # Utility functions (helpers, constants, common logic)
+- validations/ # Form and input validation functions and schemas
 
 ## Key Components
 
