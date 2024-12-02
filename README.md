@@ -140,19 +140,19 @@ EditComment: Authorized users can edit their existing comments.
 DeleteComment: Authorized users can delete their comments.
 
 ## Usage
-Sign Up: Create a new account by providing your name, email, and password.
-Login: After signing up, log in with your credentials.
-Search for Videos: Use the search bar to find videos by title.
-Upload Videos: Upload videos to your channel with metadata.
-Manage Channel: Edit your channel details and manage your videos.
-Comment: Interact with videos by commenting.
-Create, Update, or Delete Comments: Users can create new comments, edit their own, or delete them.
-Responsive Design: View the app on different devices for an optimized experience.
+**Sign Up**: Create a new account by providing your name, email, and password.
+**Login**: After signing up, log in with your credentials.
+**Search for Videos**: Use the search bar to find videos by title.
+**Upload Videos**: Upload videos to your channel with metadata.
+**Manage Channel**: Edit your channel details and manage your videos.
+**Comment**: Interact with videos by commenting.
+**Create, Update, or Delete Comments**: Users can create new comments, edit their own, or delete them.
+**Responsive Design**: View the app on different devices for an optimized experience.
 
-Contributing
+## Contributing
 If you would like to contribute to this project, feel free to fork the repository, create a new branch, and submit a pull request. Please make sure your changes are well-tested and that they don't break existing functionality.
 
-Acknowledgements
+## Acknowledgements
 React.js
 Tailwind CSS
 Material UI
