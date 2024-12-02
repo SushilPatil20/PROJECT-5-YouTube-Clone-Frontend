@@ -101,7 +101,7 @@ The app will be available at http://localhost:5173.
 
 ## Project Structure
 
-src/
+**src/**
 - assets/ Static assets like images, fonts, etc.
 - components/ Reusable components (Header, Sidebar, etc.)
 - hooks/ Custom hooks (e.g., authentication, video management, etc.)
