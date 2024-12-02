@@ -1,7 +1,7 @@
 import React, { lazy, StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App.jsx";
 import "./index.css";
+import App from "./App.jsx";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import SignUp from "./components/authenticationPages/SignUp.jsx";
@@ -12,13 +12,16 @@ import VideoManagementDashboard from "./components/videoComponents/VideoManageme
 import store from "./redux/store.js";
 import EditVideoData from "./components/videoComponents/EditVideoData.jsx";
 import ChannelManagement from "./components/channelComponents/ChannelManagement.jsx";
-import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import CustomErrorPage from "./components/CustomErrorPage.jsx";
+import AuthGuard from "./middlewares/AuthGuard.jsx";
+import WatchPageSkeleton from "./components/skeletonComponents/WatchPageSkeleton.jsx";
+import SearchPageSkeleton from "./components/skeletonComponents/SearchPageSkeleton.jsx";
 const WatchPage = lazy(() =>
   import("./components/videoListongComponent/Watch.jsx")
 );
-import AuthGuard from "./middlewares/AuthGuard.jsx";
-import SearchResults from "./components/videoListongComponent/SearchResults.jsx";
+const SearchResults = lazy(() =>
+  import("./components/videoListongComponent/SearchResults.jsx")
+);
 
 const appRouter = createBrowserRouter([
   {
@@ -31,12 +34,16 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/results",
-        element: <SearchResults />,
+        element: (
+          <React.Suspense fallback={<SearchPageSkeleton />}>
+            <SearchResults />
+          </React.Suspense>
+        ),
       },
       {
         path: "/watch/:videoId",
         element: (
-          <React.Suspense fallback={<p>Loading...</p>}>
+          <React.Suspense fallback={<WatchPageSkeleton />}>
             <WatchPage />,
           </React.Suspense>
         ),

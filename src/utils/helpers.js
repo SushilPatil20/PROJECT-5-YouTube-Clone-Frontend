@@ -361,30 +361,24 @@ export const carts = [
         description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus optio natus minima qui dolor harum voluptas voluptates nemo quas quidem expedita blanditiis dicta repudiandae veritatis exercitationem sint dolorum unde eum, autem debitis tempore. Voluptate, adipisci temporibus possimus repellat sequi cumque hic veritatis a obcaecati perspiciatis commodi fugit quam amet magni est ut facere. Ullam cum veritatis saepe in debitis quia neque culpa eveniet nam non animi totam autem ad voluptas, distinctio dignissimos. Tenetur et consectetur rerum placeat delectus, ea quaerat accusamus harum laudantium obcaecati temporibus repudiandae aut a nulla at cum incidunt itaque aliquid impedit qui dolorum totam sed maxime aperiam? Molestias provident rem maiores repellendus necessitatibus suscipit fugiat beatae ullam nobis tempore eius similique aut porro inventore architecto dolorem et, aliquam quisquam omnis debitis quibusdam tenetur odio placeat. Mollitia asperiores laboriosam aliquid minima necessitatibus quasi! Sunt fugiat, ab atque aperiam saepe alias eum quae culpa consequatur facere libero incidunt enim quam? Cupiditate cumque, consectetur corporis quaerat mollitia provident nobis nisi dignissimos incidunt est asperiores magnam sequi hic deserunt vel voluptates, ipsum ex autem unde odio perspiciatis omnis, accusamus voluptatum. Natus facere veritatis sit facilis repellendus sapiente! Culpa facere optio sint magnam,"
     }
 ];
-export const comments = [
-    {
-        id: 1,
-        channel: "CodeAcademy",
-        profileImage:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqkUYrITWyI8OhPNDHoCDUjGjhg8w10_HRqg&s",
-        comment: "Very nice song👏🏻",
-        likse: 7,
-        dislikes: 3,
-    },
-    {
-        id: 2,
-        channel: "MUZIC MANTRA",
-        profileImage:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_P-q6NHBvJE07jKBmpMxCtJV1OoWjIsGLig&s",
-        comment: "Jay shree ram 🙏🏻🙏🏻🙏🏻",
-        likse: 6,
-        dislikes: 3,
-    },
+
+export const categories = [
+    "All",
+    "Music",
+    "Gaming",
+    "Education",
+    "Sports",
+    "Movies",
+    "News",
+    "Podcasts",
+    "Technology",
+    "Food & Cooking",
+    "Travel",
 ];
+
 export const back = () => window.history.back()
 
 export const checkScreenSize = () => window.innerWidth >= 1312
-
 
 /**
  * 

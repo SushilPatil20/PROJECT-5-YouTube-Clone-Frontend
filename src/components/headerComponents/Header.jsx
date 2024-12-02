@@ -3,7 +3,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import YouTubeLogo from "./YouTubeLogo";
 import { Mic } from "@mui/icons-material";
 import Person from "@mui/icons-material/Person";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { ArrowBack } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
@@ -19,12 +19,14 @@ const Header = ({ toggleSidebar }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 660);
   const [isSearchClick, setIsSearchClick] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [search, setSearch] = useState("");
+  const urlParams = new URLSearchParams(window.location.search);
+  const searchedQuery = urlParams.get("search_query");
+  const [search, setSearch] = useState(searchedQuery || "");
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const navigate = useNavigate();
   const handleClose = () => setAnchorEl(null);
   const open = Boolean(anchorEl);
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const dispatch = useDispatch();
   const currenUrl = useUrlPathName();
 
@@ -62,7 +64,7 @@ const Header = ({ toggleSidebar }) => {
 
   return compontShouldShowOnSignUpAndSignIn(currenUrl) ? (
     <>
-      {isSearchClick ? (
+      {isSearchClick && isMobile ? (
         <header className="flex items-center justify-between pl-1 bg-white sticky top-0 pr-6 py-2 lg:hidden md:hidden">
           <IconButton
             onClick={() => {
@@ -158,15 +160,22 @@ const Header = ({ toggleSidebar }) => {
                     className="flex items-center cursor-pointer text-blue-600 space-x-2 p-1 rounded-full  hover:bg-blue-100 hover:border-blue-100 duration-100 mr-0 md:mr-4"
                   >
                     <Tooltip title="Profile" placement="bottom">
-                      <Person
-                        fontSize="large"
-                        className="border border-blue-600 rounded-full w-8"
-                        sx={{
-                          fontSize: {
-                            md: "2rem",
-                          },
-                        }}
-                      />
+                      {user.user && user.user.avatar ? (
+                        <img
+                          src={user.user.avatar}
+                          className="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover object-right"
+                        ></img>
+                      ) : (
+                        <Person
+                          fontSize="large"
+                          className="border border-blue-600 rounded-full w-8"
+                          sx={{
+                            fontSize: {
+                              md: "2rem",
+                            },
+                          }}
+                        />
+                      )}
                     </Tooltip>
                   </div>
                   <ProfilePopover

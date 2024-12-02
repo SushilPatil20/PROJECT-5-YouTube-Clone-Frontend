@@ -1,5 +1,6 @@
-import React from "react";
-import VideoManagementTable from "./VideoManagementTable";
+import React, { lazy } from "react";
+import VideoManagementTableSkeleton from "../skeletonComponents/VideoManagementTableSkeleton";
+const VideoManagementTable = lazy(() => import("./VideoManagementTable"));
 
 const VideoManagementDashboard = () => {
   return (
@@ -7,7 +8,9 @@ const VideoManagementDashboard = () => {
       <h1 className="md:text-2xl font-semibold mt-6 mb-4 text-center md:text-left">
         Video Management Dashboard
       </h1>
-      <VideoManagementTable />
+      <React.Suspense fallback={<VideoManagementTableSkeleton />}>
+        <VideoManagementTable />
+      </React.Suspense>
     </div>
   );
 };

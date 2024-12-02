@@ -28,3 +28,12 @@ export const deleteComment = async (commentId) => {
         throw error.response?.data?.error || 'Server side issue : Error getting comment. please check your internet connection.';
     }
 }
+
+export const updateComment = async (commentId, text) => {
+    try {
+        const response = await api.put(`/comment/update/${commentId}`, { text }, { headers: { 'Content-Type': 'application/json' } })
+        return { status: response.status, videoId: response.data.comment.videoId }
+    } catch (error) {
+        throw error.response?.data?.error || 'Server side issue : Error getting comment. please check your internet connection.';
+    }
+}

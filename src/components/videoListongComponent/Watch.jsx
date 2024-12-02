@@ -16,18 +16,22 @@ import { useFormValidation } from "../../validations/useFormValidation";
 import commentSchema from "../../validations/commentSchema";
 import {
   fetchRecommendedVideos,
+  getFilteredVideos,
   getSingleVideo,
 } from "../../services/videoServices";
 import Profile from "../../assets/profile-image.png";
 import useAuth from "../../customeHooks/useAuth";
-import { createComment, deleteComment } from "../../services/commentServices";
+import {
+  createComment,
+  deleteComment,
+  updateComment,
+} from "../../services/commentServices";
 
 const WatchPage = () => {
   const { videoId } = useParams();
   const navigate = useNavigate();
   const [currentVideo, setCurrentVideo] = useState({});
   const [recommendedVideos, setRecommendedVideos] = useState([]);
-
   const [likes, setLikes] = useState(0);
   const [isFocusCommentBox, setIsFocusCommentBox] = useState(false);
   const { register, handleSubmit, errors } = useFormValidation(commentSchema);
@@ -39,21 +43,29 @@ const WatchPage = () => {
   const [authUserChannel, setAuthUserChannel] = useState({});
   const [actionVisibility, setActionVisibility] = useState([]);
   const [editingCommentId, setEditingCommentId] = useState(null);
-  const [editedComment, setEditedCommentId] = useState("");
+  const [editedComment, setEditedComment] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All"); // Default category
 
   const fetchVideo = async (videoId) => {
-    const video = await getSingleVideo(videoId);
-    setComments(video.video.comments);
-    setCurrentVideo(video.video);
-    if (user.user && user.user.channels.length > 0) {
-      setAuthUserChannel(user.user.channels[0]);
+    if (selectedCategory === "All") {
+      const video = await getSingleVideo(videoId);
+      setComments(video.video.comments);
+      setCurrentVideo(video.video);
+      if (user.user && user.user.channels.length > 0) {
+        setAuthUserChannel(user.user.channels[0]);
+      }
     }
   };
 
   const getRecommendations = async (videoId) => {
     try {
-      const videos = await fetchRecommendedVideos(videoId);
-      setRecommendedVideos(videos);
+      if (selectedCategory === "All") {
+        const videos = await fetchRecommendedVideos(videoId);
+        setRecommendedVideos(videos);
+      } else {
+        const data = await getFilteredVideos(selectedCategory);
+        setRecommendedVideos(data.videos);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -64,22 +76,30 @@ const WatchPage = () => {
     setEditingCommentId(commentId);
     toggleActionVisibility(index);
   };
-  const handleCancelEdit = () => setEditingCommentId(null);
+  const handleCancelEdit = () => {
+    setEditedComment("");
+    setEditingCommentId(null);
+  };
 
-  const handleSave = async (commentId) => {
+  const handleSave = async (commentId, index) => {
     try {
-      await commentSchema.validate(editedComment);
+      await commentSchema.validate({ editedComment });
       const result = await updateComment(commentId, editedComment);
-      console.log(result);
+      if (result.status === 200) {
+        handleCancelEdit();
+        toggleActionVisibility(index);
+        fetchVideo(result.videoId);
+      }
     } catch (error) {
-      consolelog(error);
+      console.log(error.message);
     }
   };
 
   useEffect(() => {
     fetchVideo(videoId);
     getRecommendations(videoId);
-  }, [videoId]);
+  }, [videoId, selectedCategory]);
+
   useEffect(() => {
     if (comments.length > 0) {
       const initialVisibility = comments.map(() => false);
@@ -164,13 +184,13 @@ const WatchPage = () => {
                 <img
                   src={currentVideo.uploader.avatar}
                   alt="Channel Name"
-                  className="w-10 h-10 rounded-full object-cover object-top"
+                  className="w-10 h-10 rounded-full object-cover"
                 />
               ) : (
                 <img
                   src={Profile}
                   alt="Channel Name"
-                  className="w-11 h-11 rounded-full object-cover object-top"
+                  className="w-11 h-11 rounded-full object-cover"
                 />
               )}
               <div className="ml-2">
@@ -253,13 +273,13 @@ const WatchPage = () => {
                 <img
                   src={user.user.avatar}
                   alt="Channel Name"
-                  className="w-11 h-10 rounded-full object-cover object-top"
+                  className="min-w-11 h-11 rounded-full object-cover"
                 />
               ) : (
                 <img
                   src={Profile}
                   alt="Channel Name"
-                  className="w-11 h-11 rounded-full object-cover object-top"
+                  className="w-11 h-11 rounded-full object-cover "
                 />
               )}
               <input
@@ -310,13 +330,13 @@ const WatchPage = () => {
                           {comment.userId && comment.userId.avatar ? (
                             <img
                               src={comment.userId && comment.userId.avatar}
-                              className="w-11 h-10 rounded-full object-cover object-top"
+                              className="w-11 h-10 rounded-full object-cover"
                             />
                           ) : (
                             <img
                               src={Profile}
                               alt="Channel Name"
-                              className="w-11 h-11 rounded-full object-cover object-top"
+                              className="w-11 h-11 rounded-full object-cover"
                             />
                           )}
                           <input
@@ -326,20 +346,20 @@ const WatchPage = () => {
                             value={
                               !editedComment ? comment.text : editedComment
                             }
-                            onChange={(e) => setEditedCommentId(e.target.value)}
+                            onChange={(e) => setEditedComment(e.target.value)}
                           />
                         </div>
                       </div>
                       <div className="space-x-2 mt-2 flex justify-end mr-6">
                         <button
-                          onClick={handleCancelEdit}
+                          onClick={() => handleCancelEdit(index)}
                           className="px-3 py-1 text-sm rounded-2xl hover:bg-gray-200  cursor-pointer"
                         >
                           Cancel
                         </button>
                         <button
                           type="submit"
-                          onClick={() => handleSave(comment._id)}
+                          onClick={() => handleSave(comment._id, index)}
                           className="px-3 py-1 text-sm rounded-2xl bg-green-600 text-white cursor-pointer"
                         >
                           Save
@@ -354,7 +374,7 @@ const WatchPage = () => {
                       <div className="flex items-start">
                         <img
                           src={comment.userId && comment.userId.avatar}
-                          className="w-10 h-10 rounded-full object-cover object-top"
+                          className="w-10 h-10 rounded-full object-cover"
                         />
                         <div className="ml-4">
                           <p
@@ -425,24 +445,21 @@ const WatchPage = () => {
           </div>
         </div>
       </div>
-
       <div className="lg:w-[32%] w-full  px-3 mt-8 md:mt-0">
         <div className="md:-mt-1 mb-2">
-          <CategoriesListing />
+          <CategoriesListing
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+          />
         </div>
         <div className="space-y-2 pb-4">
-          {recommendedVideos.length > 0 &&
+          {recommendedVideos.length > 0 ? (
             recommendedVideos.map((video) => (
               <div
                 onClick={() => navigate(`/watch/${video._id}`)}
                 className="flex space-x-2 cursor-pointer"
                 key={video._id}
               >
-                {/* <video
-                  ref={videoRef}
-                  className="w-44 h-24 rounded"
-                  src="https://www.w3schools.com/html/mov_bbb.mp4"
-                /> */}
                 <div className="min-w-44 h-24">
                   <img
                     src={video.thumbnailUrl}
@@ -461,7 +478,13 @@ const WatchPage = () => {
                   </p>
                 </div>
               </div>
-            ))}
+            ))
+          ) : (
+            <p className="text-center my-4 px-12">
+              No recommendations and category wise videos are available right
+              now.
+            </p>
+          )}
         </div>
       </div>
     </div>

@@ -49,7 +49,7 @@ const ChannelPage = () => {
         <img
           src={channel.owner && channel.owner.avatar}
           alt={channel.owner && channel.owner.name}
-          className="w-28 h-28 md:w-40 md:h-40 object-top rounded-full object-cover"
+          className="w-28 h-28 md:w-40 md:h-40 rounded-full object-cover"
         />
         <div>
           <div className="text-center md:text-left mt-2">

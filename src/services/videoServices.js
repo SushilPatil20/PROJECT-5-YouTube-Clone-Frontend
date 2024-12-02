@@ -93,3 +93,12 @@ export const fetchRecommendedVideos = async (videoId) => {
         console.error('Failed to fetch recommended videos:', error);
     }
 };
+
+export const getFilteredVideos = async (category) => {
+    try {
+        const response = await api.get(`/video/filtered/${category}`);
+        return response.data;
+    } catch (error) {
+        console.error('Failed to fetch category wise videos', error);
+    }
+}
