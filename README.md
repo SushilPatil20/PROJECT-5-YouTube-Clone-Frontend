@@ -115,29 +115,29 @@ src/
 ## Key Components
 
 ## Authentication
-Login: Allows users to log in with email and password.
-Signup: Users can create a new account.
+-**Login**: Allows users to log in with email and password.
+-**Signup**: Users can create a new account.
 Protected Routes: Certain routes like video management and channel creation are protected and accessible only to authenticated users.
 
 ## Video
-VideoList: Displays a list of videos with basic information like title, description, and thumbnail.
-VideoPlayer: A custom video player that provides basic controls (play, pause, volume, etc.).
-VideoUploadModal: Modal for uploading videos with fields for metadata like title, description, tags, and thumbnail.
-EditVideoData: A page to edit video details.
+-**VideoList**: Displays a list of videos with basic information like title, description, and thumbnail.
+-**VideoPlayer**: A custom video player that provides basic controls (play, pause, volume, etc.).
+-**VideoUploadModal**: Modal for uploading videos with fields for metadata like title, description, tags, and thumbnail.
+-**EditVideoData**: A page to edit video details.
 
 ## Search & Filter
-SearchBar: Allows users to search for videos by title or tags.
-FilterSidebar: Provides options to filter videos by categories like Music, Sports, etc.
+-**SearchBar**: Allows users to search for videos by title or tags.
+-**FilterSidebar**: Provides options to filter videos by categories like Music, Sports, etc.
 
 ## Channel
-CreateChannelPopover: Popover for creating a new channel.
-ChannelManagement: Users can view and manage their uploaded videos and other channel details.
+-**CreateChannelPopover**: Popover for creating a new channel.
+-**ChannelManagement**: Users can view and manage their uploaded videos and other channel details.
 
 ## Comment Management
-CommentSection: Allows users to view, create, update, and delete comments on videos.
-CommentForm: Provides a form to submit new comments.
-EditComment: Authorized users can edit their existing comments.
-DeleteComment: Authorized users can delete their comments.
+-**CommentSection**: Allows users to view, create, update, and delete comments on videos.
+-**CommentForm**: Provides a form to submit new comments.
+-**EditComment**: Authorized users can edit their existing comments.
+-**DeleteComment**: Authorized users can delete their comments.
 
 ## Usage
 - **Sign Up**: Create a new account by providing your name, email, and password.
