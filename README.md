@@ -102,42 +102,42 @@ The app will be available at http://localhost:5173.
 ## Project Structure
 
 src/
-- assets/ # Static assets like images, fonts, etc.
-- components/ # Reusable components (Header, Sidebar, etc.)
-- hooks/ # Custom hooks (e.g., authentication, video management, etc.)
-- pages/ # Page components (Home, Watch, Profile, etc.)
-- redux/ # Redux store setup, actions, reducers, and state management
-- services/ # API service functions for interacting with the backend
-- styles/ # Global styles (TailwindCSS setup, theme, etc.)
-- utils/ # Utility functions (helpers, constants, common logic)
-- validations/ # Form and input validation functions and schemas
+- assets/ Static assets like images, fonts, etc.
+- components/ Reusable components (Header, Sidebar, etc.)
+- hooks/ Custom hooks (e.g., authentication, video management, etc.)
+- pages/ Page components (Home, Watch, Profile, etc.)
+- redux/ Redux store setup, actions, reducers, and state management
+- services/ API service functions for interacting with the backend
+- styles/ Global styles (TailwindCSS setup, theme, etc.)
+- utils/ Utility functions (helpers, constants, common logic)
+- validations/ Form and input validation functions and schemas
 
 ## Key Components
 
 ## Authentication
--**Login**: Allows users to log in with email and password.
--**Signup**: Users can create a new account.
+- **Login**: Allows users to log in with email and password.
+- **Signup**: Users can create a new account.
 Protected Routes: Certain routes like video management and channel creation are protected and accessible only to authenticated users.
 
 ## Video
--**VideoList**: Displays a list of videos with basic information like title, description, and thumbnail.
--**VideoPlayer**: A custom video player that provides basic controls (play, pause, volume, etc.).
--**VideoUploadModal**: Modal for uploading videos with fields for metadata like title, description, tags, and thumbnail.
--**EditVideoData**: A page to edit video details.
+- **VideoList**: Displays a list of videos with basic information like title, description, and thumbnail.
+- **VideoPlayer**: A custom video player that provides basic controls (play, pause, volume, etc.).
+- **VideoUploadModal**: Modal for uploading videos with fields for metadata like title, description, tags, and thumbnail.
+- **EditVideoData**: A page to edit video details.
 
 ## Search & Filter
--**SearchBar**: Allows users to search for videos by title or tags.
--**FilterSidebar**: Provides options to filter videos by categories like Music, Sports, etc.
+- **SearchBar**: Allows users to search for videos by title or tags.
+- **FilterSidebar**: Provides options to filter videos by categories like Music, Sports, etc.
 
 ## Channel
--**CreateChannelPopover**: Popover for creating a new channel.
--**ChannelManagement**: Users can view and manage their uploaded videos and other channel details.
+- **CreateChannelPopover**: Popover for creating a new channel.
+- **ChannelManagement**: Users can view and manage their uploaded videos and other channel details.
 
 ## Comment Management
--**CommentSection**: Allows users to view, create, update, and delete comments on videos.
--**CommentForm**: Provides a form to submit new comments.
--**EditComment**: Authorized users can edit their existing comments.
--**DeleteComment**: Authorized users can delete their comments.
+- **CommentSection**: Allows users to view, create, update, and delete comments on videos.
+- **CommentForm**: Provides a form to submit new comments.
+- **EditComment**: Authorized users can edit their existing comments.
+- **DeleteComment**: Authorized users can delete their comments.
 
 ## Usage
 - **Sign Up**: Create a new account by providing your name, email, and password.
@@ -153,9 +153,9 @@ Protected Routes: Certain routes like video management and channel creation are 
 If you would like to contribute to this project, feel free to fork the repository, create a new branch, and submit a pull request. Please make sure your changes are well-tested and that they don't break existing functionality.
 
 ## Acknowledgements
-React.js
-Tailwind CSS
-Material UI
-Redux
-Axios
-React Router
+- React.js
+- Tailwind CSS
+- Material UI
+- Redux
+- Axios
+- React Router
