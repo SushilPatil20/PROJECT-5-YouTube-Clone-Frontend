@@ -79,27 +79,27 @@ A fully responsive YouTube clone application built with the MERN stack. This fro
 
 To get started with this project on your local machine, follow these steps:
 
-1. Clone this repository:
+## 1. Clone this repository:
 
    ```bash
    git clone https://github.com/yourusername/youtube-clone-frontend.git
    ```
 
-2. Navigate to the project directory:
+## 2. Navigate to the project directory:
 
 cd youtube-clone-frontend
 
-3. Install the necessary dependencies:
+## 3. Install the necessary dependencies:
 
 npm install
 
-4. Run the development server:
+## 4. Run the development server:
 
-npm run dev
+    npm run dev
 
 The app will be available at http://localhost:5173.
 
-Project Structure
+## Project Structure
 
 src/
 ├── assets/ # Static assets like images, fonts, etc.
@@ -112,34 +112,34 @@ src/
 ├── utils/ # Utility functions (helpers, constants, common logic)
 └── validations/ # Form and input validation functions and schemas
 
-Key Components
+## Key Components
 
-Authentication
+## Authentication
 Login: Allows users to log in with email and password.
 Signup: Users can create a new account.
 Protected Routes: Certain routes like video management and channel creation are protected and accessible only to authenticated users.
 
-Video
+## Video
 VideoList: Displays a list of videos with basic information like title, description, and thumbnail.
 VideoPlayer: A custom video player that provides basic controls (play, pause, volume, etc.).
 VideoUploadModal: Modal for uploading videos with fields for metadata like title, description, tags, and thumbnail.
 EditVideoData: A page to edit video details.
 
-Search & Filter
+## Search & Filter
 SearchBar: Allows users to search for videos by title or tags.
 FilterSidebar: Provides options to filter videos by categories like Music, Sports, etc.
 
-Channel
+## Channel
 CreateChannelPopover: Popover for creating a new channel.
 ChannelManagement: Users can view and manage their uploaded videos and other channel details.
 
-Comment Management
+## Comment Management
 CommentSection: Allows users to view, create, update, and delete comments on videos.
 CommentForm: Provides a form to submit new comments.
 EditComment: Authorized users can edit their existing comments.
 DeleteComment: Authorized users can delete their comments.
 
-Usage
+## Usage
 Sign Up: Create a new account by providing your name, email, and password.
 Login: After signing up, log in with your credentials.
 Search for Videos: Use the search bar to find videos by title.
