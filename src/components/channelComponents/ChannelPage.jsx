@@ -7,6 +7,7 @@ import IfNotContent from "../IfNotContent.jsx";
 import { getChannelByHandle } from "../../services/channelServices.js";
 import { formatTimeAgo } from "../../utils/helpers.js";
 import useAuth from "../../customeHooks/useAuth.js";
+import Profile from "../../assets/profile-image.png";
 
 const ChannelPage = () => {
   const navigate = useNavigate();
@@ -46,11 +47,15 @@ const ChannelPage = () => {
         </div>
       )}
       <div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-4 md:px-8 pt-5">
-        <img
-          src={channel.owner && channel.owner.avatar}
-          alt={channel.owner && channel.owner.name}
-          className="w-28 h-28 md:w-40 md:h-40 rounded-full object-cover"
-        />
+        {channel.owner && channel.owner.avatar ? (
+          <img
+            src={channel.owner && channel.owner.avatar}
+            alt={channel.owner && channel.owner.name}
+            className="w-28 h-28 md:w-40 md:h-40 rounded-full object-cover"
+          />
+        ) : (
+          <img src={Profile} className="w-28 h-28  object-cover" />
+        )}
         <div>
           <div className="text-center md:text-left mt-2">
             <h2 className="text-4xl  font-semibold ">

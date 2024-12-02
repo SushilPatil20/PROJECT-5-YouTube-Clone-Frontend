@@ -6,7 +6,6 @@ import { getUrlPathName } from "./utils/helpers.js";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import { compontShouldShowOnSignUpAndSignIn } from "./utils/helpers.js";
 import { useUrlPathName } from "./customeHooks/useUrlPathName.js";
-import LinearProgressLoader from "./components/LinearProgressLoader.jsx";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -21,9 +20,6 @@ function App() {
   return (
     <>
       <div className="flex flex-col h-screen">
-        <div style={{ height: "2px" }}>
-          <LinearProgressLoader />
-        </div>
         <Header toggleSidebar={toggleSidebar} className="flex-shrink-0" />
         <main className="flex flex-1 overflow-hidden relative">
           {compontShouldShowOnSignUpAndSignIn(currenUrl) && (
