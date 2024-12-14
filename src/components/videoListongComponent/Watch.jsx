@@ -135,7 +135,7 @@ const WatchPage = () => {
   };
 
   const onSubmit = async (comment) => {
-    if (user.user.channels.length > 0) {
+    if (user.user && user.user.channels.length > 0) {
       if (userId && videoId) {
         const newComment = {
           ...comment,
