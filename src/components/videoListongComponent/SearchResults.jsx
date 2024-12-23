@@ -53,7 +53,7 @@ const SearchResults = () => {
           </div>
         )}
         <div className="space-y-4">
-          {videos.length > 0 && !serverError ? (
+          {videos && videos.length > 0 && !serverError ? (
             videos.map((video) => (
               <div
                 onClick={() => navigate(`/watch/${video._id}`)}

@@ -46,9 +46,9 @@ export const deleteVideo = async (videoId) => {
     }
 };
 
-export const getAllVideos = async (page) => {
+export const getAllVideos = async () => {
     try {
-        const response = await api.get(`/video/get?page=${page}&limit=12`);
+        const response = await api.get(`/video/get`);
         return response.data
     } catch (error) {
         return handleError(error);

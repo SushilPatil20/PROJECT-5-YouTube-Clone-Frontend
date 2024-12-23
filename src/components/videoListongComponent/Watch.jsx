@@ -26,6 +26,8 @@ import {
   deleteComment,
   updateComment,
 } from "../../services/commentServices";
+import { useDispatch } from "react-redux";
+import { closeSidebar } from "../../redux/slice/sideBarSlice.js";
 
 const WatchPage = () => {
   const { videoId } = useParams();
@@ -45,6 +47,11 @@ const WatchPage = () => {
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editedComment, setEditedComment] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All"); // Default category
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(closeSidebar());
+  }, []);
 
   const fetchVideo = async (videoId) => {
     if (selectedCategory === "All") {

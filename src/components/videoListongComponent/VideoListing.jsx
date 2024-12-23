@@ -57,45 +57,46 @@ const VideoListing = () => {
         <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 py-2 gap-4">
           {renderSkeletons()}
         </section>
-      ) : videos.length === 0 ? (
+      ) : videos && videos.length === 0 ? (
         <p className="text-2xl font-semibold text-gray-600 text-center mt-16">
           No videos available for this category.
         </p>
       ) : (
         <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 py-2 gap-4">
-          {videos.map((video) => (
-            <div
-              onClick={() => navigate(`/watch/${video._id}`)}
-              key={video._id}
-              className="min-h-[300px]"
-            >
-              <div className="min-h-72 cursor-pointer md:w-full md:mb-4">
-                <HoverVideoPlayer
-                  className="w-full cursor-pointer"
-                  videoSrc={video.videoUrl}
-                  pausedOverlay={
-                    <img
-                      className="rounded-lg h-52 object-cover w-full hover:rounded-none"
-                      src={video.thumbnailUrl}
-                      alt={video.title}
-                      loading="lazy"
-                    />
-                  }
-                  loadingOverlay={
-                    <div className="rounded-lg h-52 w-full bg-gray-300 animate-pulse"></div>
-                  }
-                  videoClassName="rounded-lg h-52 object-cover w-full hover:rounded-none"
-                />
-                <div className="py-1 space-y-1">
-                  <p className="font-semibold line-clamp-1">{video.title}</p>
-                  <small className="text-gray-600 block">
-                    {formatCount(video.views)} views •{" "}
-                    {formatTimeAgo(video.uploadDate)}
-                  </small>
+          {videos &&
+            videos.map((video) => (
+              <div
+                onClick={() => navigate(`/watch/${video._id}`)}
+                key={video._id}
+                className="min-h-[300px]"
+              >
+                <div className="min-h-72 cursor-pointer md:w-full md:mb-4">
+                  <HoverVideoPlayer
+                    className="w-full cursor-pointer"
+                    videoSrc={video.videoUrl}
+                    pausedOverlay={
+                      <img
+                        className="rounded-lg h-52 object-cover w-full hover:rounded-none"
+                        src={video.thumbnailUrl}
+                        alt={video.title}
+                        loading="lazy"
+                      />
+                    }
+                    loadingOverlay={
+                      <div className="rounded-lg h-52 w-full bg-gray-300 animate-pulse"></div>
+                    }
+                    videoClassName="rounded-lg h-52 object-cover w-full hover:rounded-none"
+                  />
+                  <div className="py-1 space-y-1">
+                    <p className="font-semibold line-clamp-1">{video.title}</p>
+                    <small className="text-gray-600 block">
+                      {formatCount(video.views)} views •{" "}
+                      {formatTimeAgo(video.uploadDate)}
+                    </small>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
         </section>
       )}
     </div>

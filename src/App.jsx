@@ -6,26 +6,30 @@ import { getUrlPathName } from "./utils/helpers.js";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import { compontShouldShowOnSignUpAndSignIn } from "./utils/helpers.js";
 import { useUrlPathName } from "./customeHooks/useUrlPathName.js";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleSidebar } from "./redux/slice/sideBarSlice.js";
 
 function App() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const dispatch = useDispatch();
+  const isSidebarOpen = useSelector((state) => state.sidebar.isOpen);
   const containerRef = useRef(null);
   const isWatchPage = getUrlPathName().includes("watch");
   const currenUrl = useUrlPathName();
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen((prevState) => !prevState);
+  const handleSideBar = () => {
+    dispatch(toggleSidebar());
   };
 
   return (
     <>
       <div className="flex flex-col h-screen">
-        <Header toggleSidebar={toggleSidebar} className="flex-shrink-0" />
+        <Header toggleSidebar={handleSideBar} className="flex-shrink-0" />
         <main className="flex flex-1 overflow-hidden relative">
           {compontShouldShowOnSignUpAndSignIn(currenUrl) && (
             <Sidebar
               isOpen={isSidebarOpen}
-              toggleSidebar={toggleSidebar}
+              toggleSidebar={handleSideBar}
               isWatchPage={isWatchPage}
             />
           )}
@@ -34,7 +38,7 @@ function App() {
           {isWatchPage && isSidebarOpen && (
             <div
               className="fixed inset-0 bg-black bg-opacity-50 z-10"
-              onClick={toggleSidebar} // -------------------------------------------------- Close sidebar when clicked outside
+              onClick={handleSideBar} // -------------------------------------------------- Close sidebar when clicked outside
             ></div>
           )}
 
