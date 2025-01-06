@@ -30,5 +30,6 @@ jobs:
       - name: Build project
         run: npm run build  # Build your React app or other assets
 
-      - name: Deploy (Optional)
-        run: echo "Deploy step here"  # Replace with your deployment commands
+      - name: Deploy to Vercel
+        run: npx vercel deploy --prod --token ${{ secrets.VERCEL_TOKEN }}
+
