@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "./redux/slice/sideBarSlice.js";
 
 function App() {
-  // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const dispatch = useDispatch();
   const isSidebarOpen = useSelector((state) => state.sidebar.isOpen);
   const containerRef = useRef(null);

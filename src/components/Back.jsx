@@ -16,7 +16,4 @@ const Back = ({ className = "", pathName = "/" }) => {
     </div>
   );
 };
-
-// onClick={back}
-
 export default Back;
