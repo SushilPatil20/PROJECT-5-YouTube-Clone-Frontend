@@ -1,0 +1,35 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Trigger pipeline on pushes to 'main' branch
+  pull_request:
+    branches:
+      - main  # Run tests on pull requests
+
+jobs:
+  build:
+    runs-on: windows-latest  # Use a Windows environment
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3  # Pulls the latest code from the repository
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.6.1'  # Specify your Node.js version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test  # Replace with your actual test command
+
+      - name: Build project
+        run: npm run build  # Build your React app or other assets
+
+      - name: Deploy to Vercel
+        run: npx vercel deploy --prod --token ${{ secrets.VERCEL_TOKEN }}
+
