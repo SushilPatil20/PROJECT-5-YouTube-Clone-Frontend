@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getLocal, removeLocal } from "../utils/helpers.js"
 
 // Create an Axios instance with base configurations
-const api = axios.create({ baseURL: 'http://localhost:8000/api' });  // This my backend API URL
+const api = axios.create({ baseURL: 'https://project-5-youtube-clone-backend.onrender.com/api' });  // This my backend API URL
 
 // Attach the JWT token to each request if it exists
 api.interceptors.request.use((config) => {
